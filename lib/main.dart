@@ -1,5 +1,6 @@
-import 'package:event_management_app/pages/login.dart';
 import 'package:flutter/material.dart';
+
+import 'components/tab_bar.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Login(),
+      home: TabBarStateless(),
     );
   }
 }
