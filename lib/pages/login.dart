@@ -18,25 +18,38 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  TextEditingController usernameEditingController;
-  TextEditingController passwordEditingController;
+  TextEditingController usernameEditingController = new TextEditingController();
+  TextEditingController passwordEditingController = new TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    usernameEditingController.dispose();
+    passwordEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            padding: EdgeInsets.only(left: 15, right: 15, top: 50),
-            margin: EdgeInsets.all(10),
-            child: SingleChildScrollView(
+        body: Form(
+            key: _formKey,
+            child: Container(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 50),
+              margin: EdgeInsets.all(10),
+              child: SingleChildScrollView(
                 child: Column(
-              children: <Widget>[
-                logo(),
-                title(),
-                usernameField(),
-                passwordField(),
-                loginButton(),
-              ],
-            ))));
+                  children: <Widget>[
+                    logo(),
+                    title(),
+                    usernameField(),
+                    passwordField(),
+                    loginButton(),
+                  ],
+                ),
+              ),
+            )));
   }
 
   Widget logo() {
@@ -59,9 +72,15 @@ class LoginState extends State<Login> {
   Widget usernameField() {
     return Container(
         padding: EdgeInsets.all(15),
-        child: TextField(
+        child: TextFormField(
           controller: usernameEditingController,
           maxLines: 1,
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter user name";
+            }
+            return null;
+          },
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: "Username",
@@ -72,10 +91,16 @@ class LoginState extends State<Login> {
   Widget passwordField() {
     return Container(
         padding: EdgeInsets.all(15),
-        child: TextField(
+        child: TextFormField(
           controller: passwordEditingController,
           maxLines: 1,
           obscureText: true,
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Please enter  your password";
+            }
+            return null;
+          },
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: "Password",
@@ -93,7 +118,17 @@ class LoginState extends State<Login> {
           "Login",
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
-        onPressed: () {},
+        onPressed: () {
+          // If both field is filled
+          if (_formKey.currentState.validate()) {
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text('Successful Login')));
+          } else {
+            // If fields are empty
+            // TODO Show up appropriate error message if not valid user
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error')));
+          }
+        },
       ),
     );
   }
