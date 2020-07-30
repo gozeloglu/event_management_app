@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:event_management_app/pages/home_page.dart';
+import 'package:event_management_app/routes.dart';
 
 class LoginStateless extends StatelessWidget {
   @override
@@ -123,6 +125,10 @@ class LoginState extends State<Login> {
           if (_formKey.currentState.validate()) {
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text('Successful Login')));
+            //Navigator.pushNamedAndRemoveUntil(
+            //  context, Routes.home, ModalRoute.withName('/'));
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                HomePage()), (Route<dynamic> route) => false);
           } else {
             // If fields are empty
             // TODO Show up appropriate error message if not valid user
