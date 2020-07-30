@@ -25,6 +25,14 @@ class LoginState extends State<Login> {
 
   final _formKey = GlobalKey<FormState>();
 
+  bool _passwordVisible = false;
+
+  @override
+  void initState() {
+    _passwordVisible = false;
+    super.initState();
+  }
+
   @override
   void dispose() {
     usernameEditingController.dispose();
@@ -96,7 +104,7 @@ class LoginState extends State<Login> {
         child: TextFormField(
           controller: passwordEditingController,
           maxLines: 1,
-          obscureText: true,
+          obscureText: !_passwordVisible,
           validator: (value) {
             if (value.isEmpty) {
               return "Please enter  your password";
@@ -104,6 +112,15 @@ class LoginState extends State<Login> {
             return null;
           },
           decoration: InputDecoration(
+            suffixIcon: IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                }),
             border: OutlineInputBorder(),
             labelText: "Password",
           ),
@@ -127,8 +144,9 @@ class LoginState extends State<Login> {
                 .showSnackBar(SnackBar(content: Text('Successful Login')));
             //Navigator.pushNamedAndRemoveUntil(
             //  context, Routes.home, ModalRoute.withName('/'));
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                HomePage()), (Route<dynamic> route) => false);
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => HomePage()),
+                (Route<dynamic> route) => false);
           } else {
             // If fields are empty
             // TODO Show up appropriate error message if not valid user

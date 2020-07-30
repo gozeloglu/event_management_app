@@ -1,4 +1,4 @@
-import 'package:event_management_app/pages/Signup.dart';
+import 'package:event_management_app/pages/sign_up.dart';
 import 'package:event_management_app/pages/home_page.dart';
 import 'package:event_management_app/pages/login.dart';
 import 'package:flutter/material.dart';
