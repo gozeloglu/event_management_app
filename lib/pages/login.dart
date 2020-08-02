@@ -42,8 +42,7 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Form(
+    return Form(
             key: _formKey,
             child: Container(
               padding: EdgeInsets.only(left: 15, right: 15, top: 50),
@@ -59,7 +58,7 @@ class LoginState extends State<Login> {
                   ],
                 ),
               ),
-            )));
+            ));
   }
 
   Widget logo() {

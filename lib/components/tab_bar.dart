@@ -16,9 +16,7 @@ class TabBarStateless extends StatelessWidget {
             isScrollable: true,
             tabs: [
               Tab(child: Text("Login")),
-              Tab(
-                text: "Sign Up",
-              )
+              Tab(text: "Sign Up")
             ],
           ),
         ),

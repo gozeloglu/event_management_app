@@ -42,8 +42,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
+    return Form(
         key: _formKey,
         child: Container(
           padding: EdgeInsets.only(left: 10, right: 10, top: 20),
@@ -63,8 +62,7 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget title() {
