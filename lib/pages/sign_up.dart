@@ -1,4 +1,6 @@
+import 'package:event_management_app/models/participant.dart';
 import 'package:event_management_app/pages/home_page.dart';
+import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -57,6 +59,7 @@ class _SignUpState extends State<SignUp> {
                 username(),
                 password(),
                 age(),
+                identityNumber(),
                 signUpButton(),
               ],
             ),
@@ -209,6 +212,27 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  Widget identityNumber() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: TextFormField(
+        controller: _identityNumberController,
+        maxLines: 1,
+        validator:(value) {
+          if (value.isEmpty) {
+            return "Please enter your identity numbebr";
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: "Identity Number",
+        ),
+      ),
+    );
+
+  }
+
   Widget signUpButton() {
     return Container(
       padding: EdgeInsets.all(10),
@@ -223,12 +247,36 @@ class _SignUpState extends State<SignUp> {
           // If all fields are filled
           if (_formKey.currentState.validate()) {
             // TODO Register the user
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Successful Sign Up')));
+            int _age = int.parse(_ageController.text);
+            ParticipantService participantService = new ParticipantService();
+            Participant newParticipant = new Participant(
+              firstName: _nameController.text,
+              lastName: _lastnameController.text,
+              email: _emailController.text,
+              userName: _usernameController.text,
+              password: _passwordController.text,
+              age: _age,
+              identityNumber: _identityNumberController.text
+            );
+            print("Model is created  " +  newParticipant.identityNumber);
+            participantService.saveUser(newParticipant).then((response){
+              if (response.statusCode < 300) {
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('Successful Sign Up')));
+              } else {
+                print(response.statusCode);
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('Sign Up is not successful!')));
+              }
+            }).catchError((error) {
+              print(error);
+            });
+            ///Scaffold.of(context)
+               /// .showSnackBar(SnackBar(content: Text('Successful Sign Up')));
             //Navigator.pushNamedAndRemoveUntil(
             //  context, Routes.home, ModalRoute.withName('/'));
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                HomePage()), (Route<dynamic> route) => false);
+            /// Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                /// HomePage()), (Route<dynamic> route) => false);
           } else {
             // If fields are empty
             // TODO Show up appropriate error message if not valid user
