@@ -1,3 +1,4 @@
+import 'package:event_management_app/pages/admin_login.dart';
 import 'package:event_management_app/pages/sign_up.dart';
 import 'package:event_management_app/pages/login.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +8,7 @@ class TabBarStateless extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
@@ -16,7 +17,8 @@ class TabBarStateless extends StatelessWidget {
             isScrollable: true,
             tabs: [
               Tab(child: Text("Login")),
-              Tab(text: "Sign Up")
+              Tab(child: Text("Sign Up")),
+              Tab(child: Text("Admin"))
             ],
           ),
         ),
@@ -24,6 +26,7 @@ class TabBarStateless extends StatelessWidget {
           children: [
             Login(),
             SignUp(),
+            AdminLogin(),
           ],
         ),
       ),

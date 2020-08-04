@@ -3,6 +3,11 @@ import 'dart:convert';
 import 'package:event_management_app/models/participant.dart';
 
 class ParticipantService {
+
+  /// This function saves the users on the system
+  /// @param newParticipant is a Participant object which contains the
+  /// information about new participant.
+  /// @return HTTP response object
   Future<http.Response> saveUser(Participant newParticipant) async {
     print("Save user");
     print(newParticipant.identityNumber);
