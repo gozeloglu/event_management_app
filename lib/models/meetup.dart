@@ -15,8 +15,8 @@ class Meetup {
   final String details;
   final String address;
   final String placeName;
-  final DateTime startDate;
-  final DateTime endDate;
+  final String startDate;
+  final String endDate;
   final int quota;
   final int registeredCount;
 
@@ -27,8 +27,8 @@ class Meetup {
       details: json["details"] as String,
       address: json["address"] as String,
       placeName: json["placeName"] as String,
-      startDate: json["startDate"] as DateTime,
-      endDate: json["endDate"] as DateTime,
+      startDate: json["startDate"] as String,
+      endDate: json["endDate"] as String,
       quota: json["quota"] as int,
       registeredCount: json["registeredCount"] as int,
     );

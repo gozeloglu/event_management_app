@@ -1,3 +1,5 @@
+import 'package:event_management_app/models/meetup.dart';
+import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -291,8 +293,46 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           if (_formKey.currentState.validate()) {
             // Save the meetup
 
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Successful New Meetup')));
+            int _quota = int.parse(_quotaController.text);
+            int _registredUserCount =
+                int.parse(_registeredUserCountController.text);
+
+            String startDateWithT = _startDateController.text.substring(0, 10) +
+                "T" +
+                _startDateController.text
+                    .substring(11, _startDateController.text.length);
+            String endDateWithT = _endDateController.text.substring(0, 10) +
+                "T" +
+                _endDateController.text
+                    .substring(11, _endDateController.text.length);
+
+            DateTime startDate = DateTime.parse(_startDateController.text);
+            DateTime endDate = DateTime.parse(_endDateController.text);
+            AdminService adminService = new AdminService();
+            Meetup meetup = new Meetup(
+              meetupID: _meetupIdController.text,
+              meetupName: _meetupNameController.text,
+              details: _detailsController.text,
+              address: _addressController.text,
+              placeName: _placeNameController.text,
+              startDate: startDateWithT,
+              endDate: endDateWithT,
+              quota: _quota,
+              registeredCount: _registredUserCount,
+            );
+            adminService.addNewMeetup(meetup).then((response) {
+              if (response.statusCode < 400) {
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text('New meetup is added')));
+              } else {
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text('Meetup could not saved')));
+              }
+            }).catchError((onError) {
+              print(onError);
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(content: Text('Something went wrong')));
+            });
           } else {
             // If fields are empty
             // TODO Show up appropriate error message if not valid user
