@@ -13,7 +13,7 @@ class AdminService {
           "firstName": "",
           "lastName": "",
           "email": "",
-          "userName": admin.userName,
+          "username": admin.userName,
           "password": admin.password,
           "age": 20,
           "identityNumber": ""

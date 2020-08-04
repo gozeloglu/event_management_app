@@ -29,11 +29,11 @@ class AdminHomeState extends State<AdminHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(),
       appBar: AppBar(
         elevation: 10,
         title: Text("Home"),
         centerTitle: true,
-        backgroundColor: Colors.redAccent,
         actions: [
           IconButton(
             icon: Icon(Icons.person),
