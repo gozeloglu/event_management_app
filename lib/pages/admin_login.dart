@@ -1,3 +1,5 @@
+import 'package:event_management_app/models/admin.dart';
+import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:event_management_app/pages/home_page.dart';
@@ -139,13 +141,29 @@ class AdminLoginState extends State<AdminLogin> {
         onPressed: () {
           // If both field is filled
           if (_formKey.currentState.validate()) {
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Successful Login')));
+            AdminService adminService = new AdminService();
+            Admin admin = new Admin(
+              userName: usernameEditingController.text,
+              password: passwordEditingController.text,
+            );
+            adminService.loginAdmin(admin).then((response) {
+              if (response.statusCode < 400) {
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('Successful Login')));
+                // TODO Navigator
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                        (Route<dynamic> route) => false);
+              } else {
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text('Login is not successful!')));
+              }
+            }).catchError((error) {
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(content: Text('Something went wrong!')));
+            });
             //Navigator.pushNamedAndRemoveUntil(
             //  context, Routes.home, ModalRoute.withName('/'));
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => HomePage()),
-                    (Route<dynamic> route) => false);
           } else {
             // If fields are empty
             // TODO Show up appropriate error message if not valid user

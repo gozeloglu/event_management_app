@@ -258,13 +258,11 @@ class _SignUpState extends State<SignUp> {
               age: _age,
               identityNumber: _identityNumberController.text
             );
-            print("Model is created  " +  newParticipant.identityNumber);
             participantService.saveUser(newParticipant).then((response){
               if (response.statusCode < 300) {
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('Successful Sign Up')));
               } else {
-                print(response.statusCode);
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('Sign Up is not successful!')));
               }
