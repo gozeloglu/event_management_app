@@ -1,3 +1,4 @@
+import 'package:event_management_app/pages/admin_add_meetup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,14 @@ class AdminHomeState extends State<AdminHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          // TODO Meetup will be added here
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AdminAddMeetup()));
+        },
+      ),
       appBar: AppBar(
         elevation: 10,
         title: Text("Home"),
