@@ -1,3 +1,4 @@
+import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:event_management_app/pages/home_page.dart';
@@ -43,22 +44,22 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Form(
-            key: _formKey,
-            child: Container(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 50),
-              margin: EdgeInsets.all(10),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    logo(),
-                    title(),
-                    usernameField(),
-                    passwordField(),
-                    loginButton(),
-                  ],
-                ),
-              ),
-            ));
+        key: _formKey,
+        child: Container(
+          padding: EdgeInsets.only(left: 15, right: 15, top: 50),
+          margin: EdgeInsets.all(10),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                logo(),
+                title(),
+                usernameField(),
+                passwordField(),
+                loginButton(),
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget logo() {
@@ -139,13 +140,26 @@ class LoginState extends State<Login> {
         onPressed: () {
           // If both field is filled
           if (_formKey.currentState.validate()) {
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Successful Login')));
-            //Navigator.pushNamedAndRemoveUntil(
-            //  context, Routes.home, ModalRoute.withName('/'));
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => HomePage()),
-                (Route<dynamic> route) => false);
+            String username = usernameEditingController.text;
+            String password = passwordEditingController.text;
+            ParticipantService participantService = new ParticipantService();
+            participantService
+                .loginParticipant(username, password)
+                .then((response) {
+              if (response.statusCode < 400) {
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('Successful Login')));
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                    (Route<dynamic> route) => false);
+              } else {
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text('Login is not successful!')));
+              }
+            }).catchError((onError) {
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(content: Text('Something went wrong!')));
+            });
           } else {
             // If fields are empty
             // TODO Show up appropriate error message if not valid user

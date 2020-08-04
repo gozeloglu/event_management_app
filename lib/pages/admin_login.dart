@@ -150,10 +150,9 @@ class AdminLoginState extends State<AdminLogin> {
               if (response.statusCode < 400) {
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('Successful Login')));
-                // TODO Navigator
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => HomePage()),
-                        (Route<dynamic> route) => false);
+                    (Route<dynamic> route) => false);
               } else {
                 Scaffold.of(context).showSnackBar(
                     SnackBar(content: Text('Login is not successful!')));
