@@ -83,8 +83,6 @@ class AdminHomeState extends State<AdminHomePage> {
             } else if (snapshot.data == null) {
               noDataMessage();
             }
-            print("no data");
-
             return Container(
               alignment: Alignment.center,
               height: 160.0,

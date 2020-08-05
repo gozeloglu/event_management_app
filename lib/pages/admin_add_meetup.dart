@@ -272,7 +272,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
         },
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: "Quota",
+          labelText: "Registered User Count",
         ),
       ),
     );
