@@ -1,5 +1,6 @@
 import 'package:event_management_app/models/meetup.dart';
 import 'package:event_management_app/pages/admin_add_meetup.dart';
+import 'package:event_management_app/pages/admin_meetup_detail.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -72,11 +73,13 @@ class AdminHomeState extends State<AdminHomePage> {
                       elevation: 5,
                       margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                       child: ListTile(
+                        trailing: Icon(Icons.arrow_right),
                         leading: Icon(Icons.event),
                         title: Text(meetupName[index]),
                         subtitle: Text(meetupDetails[index], maxLines: 1),
                         onTap: (){
                           // TODO Details page
+                          Navigator.push(context, new MaterialPageRoute(builder: (context)=> new AdminMeetupDetail(snapshot.data[index]["meetupID"])));
                         },
                       ),
                     );
