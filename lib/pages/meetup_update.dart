@@ -76,7 +76,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           elevation: 10,
@@ -93,7 +92,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          meetupIdWiget(),
+                          //meetupIdWiget(),
                           meetupNameWidget(),
                           detailsWidget(),
                           addressWidget(),
@@ -326,20 +325,13 @@ class MeetupUpdateState extends State<MeetupUpdate> {
         elevation: 8,
         color: Colors.green,
         child: Text(
-          "Add New Meetup",
+          "Update Meetup",
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
         onPressed: () {
           // If all fields are filled
           if (_formKey.currentState.validate()) {
             // Save the meetup
-            print("here");
-            DateTime dateTime = DateTime.parse(_startDateController.text);
-            print(dateTime);
-
-//            print(f.format(_startDateController.text).toString());
-  //          print(f.format(_endDateController.text).toString());
-            print("here");
             int _quota = int.parse(_quotaController.text);
             int _registredUserCount =
                 int.parse(_registeredUserCountController.text);
@@ -348,10 +340,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
 
             String endDateWithT = _endDateController.text.substring(0, 10);
 
-            print(startDateWithT);
-            print(endDateWithT);
-            //DateTime startDate = DateTime.parse(_startDateController.text);
-            //DateTime endDate = DateTime.parse(_endDateController.text);
             AdminService adminService = new AdminService();
             Meetup meetup = new Meetup(
               meetupID: _meetupIdController.text,
@@ -364,7 +352,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
               quota: _quota,
               registeredCount: _registredUserCount,
             );
-            adminService.updateMeetup(meetup).then((response) {
+            adminService.updateMeetup(widget.meetupID, meetup).then((response) {
               if (response.statusCode < 400) {
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('Meetup is updaetd')));
@@ -379,8 +367,8 @@ class MeetupUpdateState extends State<MeetupUpdate> {
             });
           } else {
             // If fields are empty
-            Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text('Error!')));
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text('Error!')));
           }
         },
       ),
