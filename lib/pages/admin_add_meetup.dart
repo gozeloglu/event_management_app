@@ -297,14 +297,8 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
             int _registredUserCount =
                 int.parse(_registeredUserCountController.text);
 
-            String startDateWithT = _startDateController.text.substring(0, 10) +
-                "T" +
-                _startDateController.text
-                    .substring(11, _startDateController.text.length);
-            String endDateWithT = _endDateController.text.substring(0, 10) +
-                "T" +
-                _endDateController.text
-                    .substring(11, _endDateController.text.length);
+            String startDateWithT = _startDateController.text.substring(0, 10);
+            String endDateWithT = _endDateController.text.substring(0, 10);
 
             DateTime startDate = DateTime.parse(_startDateController.text);
             DateTime endDate = DateTime.parse(_endDateController.text);
