@@ -12,7 +12,7 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class AdminHomeState extends State<AdminHomePage> {
-
+  bool _refresh = false;
   Future<List<dynamic>> meetupList;
   AdminService adminService = new AdminService();
 
@@ -40,8 +40,12 @@ class AdminHomeState extends State<AdminHomePage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {},
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+                _refresh = !_refresh;
+              });
+            },
           ),
         ],
       ),
@@ -52,16 +56,13 @@ class AdminHomeState extends State<AdminHomePage> {
             if (snapshot.hasData) {
               print("Data is done");
               List<String> meetupName = List();
-              List<String> meetupId = List();
+              List<String> meetupDetails = List();
 
               for (int i = 0; i < snapshot.data.length; i++) {
                 meetupName.add(snapshot.data[i]["meetupName"]);
-                meetupId.add(snapshot.data[i]["meetupID"]);
+                meetupDetails.add(snapshot.data[i]["details"]);
               }
 
-              print(meetupName);
-              print("------------------");
-              print(meetupId);
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
@@ -73,7 +74,7 @@ class AdminHomeState extends State<AdminHomePage> {
                       child: ListTile(
                         leading: Icon(Icons.event),
                         title: Text(meetupName[index]),
-                        subtitle: Text(meetupId[index]),
+                        subtitle: Text(meetupDetails[index], maxLines: 1),
                         onTap: (){
                           // TODO Details page
                         },
