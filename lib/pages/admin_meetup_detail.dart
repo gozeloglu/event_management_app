@@ -1,4 +1,5 @@
 import 'package:event_management_app/models/meetup.dart';
+import 'package:event_management_app/pages/meetup_update.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -87,9 +88,6 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                           subtitle: Text(snapshot.data.quota.toString()),
                         ),
                         ListTile(
-                          onTap: () {
-                            print(snapshot.data.registeredCount);
-                          },
                           title: Text("Registered User Count"),
                           subtitle:
                               Text(snapshot.data.registeredCount.toString()),
@@ -111,7 +109,9 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
                                           new BorderRadius.circular(20)),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // TODO Delete part
+                                  },
                                   child: Text(
                                     "Delete",
                                     style: TextStyle(
@@ -131,7 +131,24 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
                                           new BorderRadius.circular(20)),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // TODO Update page
+                                    Navigator.push(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                new MeetupUpdate(
+                                                    snapshot.data.meetupID,
+                                                    snapshot.data.meetupName,
+                                                    snapshot.data.details,
+                                                    snapshot.data.address,
+                                                    snapshot.data.placeName,
+                                                    snapshot.data.startDate,
+                                                    snapshot.data.endDate,
+                                                    snapshot.data.quota,
+                                                    snapshot.data.registeredCount
+                                                )));
+                                  },
                                   child: Text(
                                     "Update",
                                     style: TextStyle(

@@ -77,9 +77,13 @@ class AdminHomeState extends State<AdminHomePage> {
                         leading: Icon(Icons.event),
                         title: Text(meetupName[index]),
                         subtitle: Text(meetupDetails[index], maxLines: 1),
-                        onTap: (){
+                        onTap: () {
                           // TODO Details page
-                          Navigator.push(context, new MaterialPageRoute(builder: (context)=> new AdminMeetupDetail(snapshot.data[index]["meetupID"])));
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new AdminMeetupDetail(
+                                      snapshot.data[index]["meetupID"])));
                         },
                       ),
                     );

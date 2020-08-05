@@ -28,6 +28,7 @@ class AdminService {
   }
 
   Future<http.Response> addNewMeetup(Meetup meetup) async {
+    print("HTTP FUNCTION");
     http.Response response =
         await http.post("http://10.0.2.2:8080/meetups/create-new-meetup",
             headers: <String, String>{
@@ -77,6 +78,31 @@ class AdminService {
       return Meetup.fromJson(json.decode(response.body));
     } else {
       throw new Exception("Meetup could not found!");
+    }
+  }
+
+  Future<http.Response> updateMeetup(Meetup meetup) async {
+    http.Response response = await http.put(
+        "http://10.0.2.2:8080/meetups/update-meetup/" + meetup.meetupID,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "meetupID": meetup.meetupID,
+          "meetupName": meetup.meetupName,
+          "details": meetup.details,
+          "address": meetup.address,
+          "placeName": meetup.placeName,
+          "startDate": meetup.startDate,
+          "endDate": meetup.endDate,
+          "quota": meetup.quota,
+          "registeredUserCount": meetup.registeredCount,
+        }));
+
+    if (response.statusCode < 400) {
+      return response;
+    } else {
+      return response;
     }
   }
 }
