@@ -28,31 +28,42 @@ class AdminService {
   }
 
   Future<http.Response> addNewMeetup(Meetup meetup) async {
-    print(meetup.endDate);
-    print(meetup.startDate);
-    print(meetup.meetupName);
     http.Response response =
-        await http.post("http://10.0.2.2:8080/meetups/create-new-meetup",
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: jsonEncode(<String, dynamic>{
-              "meetupID": meetup.meetupID,
-              "meetupName": meetup.meetupName,
-              "details": meetup.details,
-              "address": meetup.address,
-              "placeName": meetup.placeName,
-              "startDate": meetup.startDate,
-              "endDate": meetup.endDate,
-              "quota": meetup.quota,
-              "registeredUserCount": meetup.registeredCount,
-            }));
+    await http.post("http://10.0.2.2:8080/meetups/create-new-meetup",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "meetupID": meetup.meetupID,
+          "meetupName": meetup.meetupName,
+          "details": meetup.details,
+          "address": meetup.address,
+          "placeName": meetup.placeName,
+          "startDate": meetup.startDate,
+          "endDate": meetup.endDate,
+          "quota": meetup.quota,
+          "registeredUserCount": meetup.registeredCount,
+        }));
 
     print(response.statusCode);
     if (response.statusCode < 400) {
       return response;
     } else {
       return response;
+    }
+  }
+
+  Future<List<dynamic>> getAllMeetups() async {
+    http.Response response = await http.get("http://10.0.2.2:8080/meetups",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        }
+    );
+
+    if (response.statusCode < 400) {
+      return (json.decode(response.body) as List);
+    } else {
+      throw new Exception("Failed to load meetups");
     }
   }
 }
