@@ -30,7 +30,7 @@ class Meetup {
       startDate: json["startDate"] as String,
       endDate: json["endDate"] as String,
       quota: json["quota"] as int,
-      registeredCount: json["registeredCount"] as int,
+      registeredCount: json["registeredUserCount"] as int,
     );
   }
 }

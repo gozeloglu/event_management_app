@@ -87,6 +87,9 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                           subtitle: Text(snapshot.data.quota.toString()),
                         ),
                         ListTile(
+                          onTap: () {
+                            print(snapshot.data.registeredCount);
+                          },
                           title: Text("Registered User Count"),
                           subtitle:
                               Text(snapshot.data.registeredCount.toString()),
