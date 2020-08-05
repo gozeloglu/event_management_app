@@ -329,7 +329,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
                     SnackBar(content: Text('Meetup could not saved')));
               }
             }).catchError((onError) {
-              print(onError);
               Scaffold.of(context).showSnackBar(
                   SnackBar(content: Text('Something went wrong')));
             });

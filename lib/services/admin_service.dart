@@ -123,4 +123,23 @@ class AdminService {
       return response;
     }
   }
+
+  /// METHOD: DELETE
+  /// This method deletes the meetup which is given as a parameter
+  /// @param meetupID is id of the meetup that we want to delete
+  /// @return HTTP Response object
+  Future<http.Response> deleteMeetup(String meetupID) async {
+    print("id " + meetupID);
+    http.Response response = await http.delete(
+        "http://10.0.2.2:8080/meetups/delete-meetup/" + meetupID,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+
+    if (response.statusCode < 400) {
+      return response;
+    } else {
+      return response;
+    }
+  }
 }

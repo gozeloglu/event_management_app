@@ -110,7 +110,27 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                       borderRadius:
                                           new BorderRadius.circular(20)),
                                   onPressed: () {
-                                    // TODO Delete part
+                                    adminService
+                                        .deleteMeetup(widget.meetupId)
+                                        .then((response) {
+                                      if (response.statusCode < 400) {
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                                content:
+                                                    Text('Meetup is deleted')));
+                                      } else {
+                                        print(response.statusCode);
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    'Meetup could not delete!')));
+                                      }
+                                    }).catchError((onError) {
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  'Something went wrong')));
+                                    });
                                   },
                                   child: Text(
                                     "Delete",
@@ -146,8 +166,8 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                                     snapshot.data.startDate,
                                                     snapshot.data.endDate,
                                                     snapshot.data.quota,
-                                                    snapshot.data.registeredCount
-                                                )));
+                                                    snapshot.data
+                                                        .registeredCount)));
                                   },
                                   child: Text(
                                     "Update",
