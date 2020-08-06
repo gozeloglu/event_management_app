@@ -30,7 +30,6 @@ class AdminHomeState extends State<AdminHomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          // TODO Meetup will be added here
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AdminAddMeetup()));
         },
@@ -55,7 +54,6 @@ class AdminHomeState extends State<AdminHomePage> {
           future: adminService.getAllMeetups(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print("Data is done");
               List<String> meetupName = List();
               List<String> meetupDetails = List();
 
@@ -78,7 +76,6 @@ class AdminHomeState extends State<AdminHomePage> {
                         title: Text(meetupName[index]),
                         subtitle: Text(meetupDetails[index], maxLines: 1),
                         onTap: () {
-                          // TODO Details page
                           Navigator.push(
                               context,
                               new MaterialPageRoute(
