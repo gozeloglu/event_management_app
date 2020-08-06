@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:event_management_app/models/participant.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,15 +38,18 @@ class ProfileState extends State<Profile> {
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          shape: BoxShape.rectangle,
                           image: DecorationImage(
-                              image: ExactAssetImage("assets/logo.png"),fit: BoxFit.cover),
+                              image: ExactAssetImage("assets/logo.png"),
+                              fit: BoxFit.cover),
                         ),
                       ),
                       Divider(),
                       Container(
                         child: Text(
-                          "Hello " + snapshot.data.firstName,
+                          "Hello " +
+                              Utf8Decoder()
+                                  .convert(snapshot.data.firstName.codeUnits),
                           style: TextStyle(fontSize: 30),
                         ),
                       ),
@@ -54,11 +59,13 @@ class ProfileState extends State<Profile> {
                       ),
                       ListTile(
                         title: Text("First Name"),
-                        subtitle: Text(snapshot.data.firstName),
+                        subtitle: Text(Utf8Decoder()
+                            .convert(snapshot.data.firstName.codeUnits)),
                       ),
                       ListTile(
                         title: Text("Last Name"),
-                        subtitle: Text(snapshot.data.lastName),
+                        subtitle: Text(Utf8Decoder()
+                            .convert(snapshot.data.lastName.codeUnits)),
                       ),
                       ListTile(
                         title: Text("Username"),
