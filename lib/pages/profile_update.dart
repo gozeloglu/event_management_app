@@ -1,3 +1,6 @@
+import 'package:event_management_app/models/participant.dart';
+import 'package:event_management_app/pages/profile.dart';
+import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -63,6 +66,12 @@ class ProfileUpdateState extends State<ProfileUpdate> {
         elevation: 10,
         title: Text("Update Profile"),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
       ),
       body: Builder(
         builder: (context) => Form(
@@ -104,7 +113,8 @@ class ProfileUpdateState extends State<ProfileUpdate> {
         },
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: "Firt Name",
+          labelText: "First Name",
+          prefixIcon: Icon(Icons.person),
         ),
       ),
     );
@@ -126,6 +136,7 @@ class ProfileUpdateState extends State<ProfileUpdate> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "Last Name",
+          prefixIcon: Icon(Icons.person),
         ),
       ),
     );
@@ -145,9 +156,9 @@ class ProfileUpdateState extends State<ProfileUpdate> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Username",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Username",
+            prefixIcon: Icon(Icons.perm_identity)),
       ),
     );
   }
@@ -171,6 +182,7 @@ class ProfileUpdateState extends State<ProfileUpdate> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "E-Mail",
+          prefixIcon: Icon(Icons.email),
         ),
       ),
     );
@@ -191,9 +203,9 @@ class ProfileUpdateState extends State<ProfileUpdate> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Age",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Age",
+            prefixIcon: Icon(Icons.date_range)),
       ),
     );
   }
@@ -216,6 +228,7 @@ class ProfileUpdateState extends State<ProfileUpdate> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "Identity Number",
+          prefixIcon: Icon(Icons.confirmation_number),
         ),
       ),
     );
@@ -224,9 +237,13 @@ class ProfileUpdateState extends State<ProfileUpdate> {
   Widget updateButtonWidget(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      child: RaisedButton(
+      child: MaterialButton(
         elevation: 8,
+        height: 48,
+        padding: const EdgeInsets.fromLTRB(48, 0, 48, 0),
         color: Colors.green,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(20)),
         child: Text(
           "Update Profile",
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -234,13 +251,40 @@ class ProfileUpdateState extends State<ProfileUpdate> {
         onPressed: () {
           // If all fields are filled
           if (_formKey.currentState.validate()) {
-            // Save the meetup
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Profile is updated!')));
+            // Update the profile
+            ParticipantService participantService = new ParticipantService();
+            Participant updatedProfile = new Participant(
+              firstName: _firstNameController.text,
+              lastName: _lastNameController.text,
+              email: _emailController.text,
+              userName: _usernameController.text,
+              age: int.parse(_ageController.text),
+              identityNumber: _identityNumberController.text,
+            );
+            participantService.updateProfile(updatedProfile).then((response) {
+              if (response.statusCode < 400) {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  'Profile is updated!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                )));
+              } else {
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text(response.body)));
+              }
+            }).catchError((onError) {
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(content: Text('Something went wrong')));
+            });
           } else {
             // If fields are empty
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Error!')));
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text(
+              'Error!',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20),
+            )));
           }
         },
       ),

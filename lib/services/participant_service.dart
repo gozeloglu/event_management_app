@@ -96,6 +96,11 @@ class ParticipantService {
     }
   }
 
+  /// METHOD POST
+  /// This method satisfies the registration of the meetup
+  /// @param username specifies the person who wants to attend the meetup
+  /// @param meetupID specifies the meetup that the participant wants to attend
+  /// @return HTTP Response object
   Future<http.Response> registerMeetup(String username, String meetupID) async {
     print(username);
     print(meetupID);
@@ -115,6 +120,10 @@ class ParticipantService {
     }
   }
 
+  /// METHOD GET
+  /// This method fetches the participant profile details
+  /// @param username specifies the participant who wants to get information
+  /// @return Participant model object
   Future<Participant> getParticipantDetails(String username) async {
     http.Response response = await http.get(
         "http://10.0.2.2:8080/participants/participant-detail/" + username,
@@ -126,6 +135,34 @@ class ParticipantService {
       return Participant.fromJson(json.decode(response.body));
     } else {
       throw new Exception("User could not found!");
+    }
+  }
+
+  /// METHOD PUT
+  /// Updates the profile
+  /// @param participant contains the updated participant information
+  /// @return HTTP Response
+  Future<http.Response> updateProfile(Participant participant) async {
+    http.Response response = await http.put(
+        "http://10.0.2.2:8080/participants/update-profile/" +
+            participant.userName,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode(<String, dynamic>{
+          "firstName": participant.firstName,
+          "lastName": participant.lastName,
+          "email": participant.email,
+          "username": participant.userName,
+          "password": "",
+          "age": participant.age,
+          "identityNumber": participant.identityNumber,
+        }));
+
+    if (response.statusCode < 400) {
+      return response;
+    } else {
+      return response;
     }
   }
 }

@@ -16,6 +16,16 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   ParticipantService participantService = new ParticipantService();
+  bool _refresh;
+
+  @override
+  void initState() {
+    _refresh = false;
+    setState(() {
+      _refresh = !_refresh;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,18 +104,36 @@ class ProfileState extends State<Profile> {
                         leading: Icon(Icons.perm_identity),
                       ),
                       ListTile(
-                        title: Text("Email", style: TextStyle(fontSize: 20),),
-                        subtitle: Text(snapshot.data.email, style: TextStyle(fontSize: 18),),
+                        title: Text(
+                          "Email",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(
+                          snapshot.data.email,
+                          style: TextStyle(fontSize: 18),
+                        ),
                         leading: Icon(Icons.email),
                       ),
                       ListTile(
-                        title: Text("Age", style: TextStyle(fontSize: 20),),
-                        subtitle: Text(snapshot.data.age.toString(), style: TextStyle(fontSize: 18),),
+                        title: Text(
+                          "Age",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(
+                          snapshot.data.age.toString(),
+                          style: TextStyle(fontSize: 18),
+                        ),
                         leading: Icon(Icons.date_range),
                       ),
                       ListTile(
-                        title: Text("Identity Number", style: TextStyle(fontSize: 20),),
-                        subtitle: Text(snapshot.data.identityNumber, style: TextStyle(fontSize: 18),),
+                        title: Text(
+                          "Identity Number",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(
+                          snapshot.data.identityNumber,
+                          style: TextStyle(fontSize: 18),
+                        ),
                         leading: Icon(Icons.confirmation_number),
                       ),
                       Divider(
@@ -125,9 +153,9 @@ class ProfileState extends State<Profile> {
                                 shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(20)),
-                                onPressed: () {
+                                onPressed: () async {
                                   // TODO Fill in
-                                  Navigator.push(
+                                  final result = await Navigator.push(
                                       context,
                                       new MaterialPageRoute(
                                           builder: (context) => ProfileUpdate(
@@ -138,6 +166,9 @@ class ProfileState extends State<Profile> {
                                               age: snapshot.data.age,
                                               identityNumber: snapshot
                                                   .data.identityNumber)));
+                                  if (result) {
+                                    setState(() {});
+                                  }
                                 },
                                 child: Text(
                                   "Update My Profile",

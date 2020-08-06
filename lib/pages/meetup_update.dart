@@ -359,7 +359,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
                     SnackBar(content: Text('Meetup could not updated')));
               }
             }).catchError((onError) {
-              print(onError);
               Scaffold.of(context).showSnackBar(
                   SnackBar(content: Text('Something went wrong')));
             });
