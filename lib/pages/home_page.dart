@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key key, this.username}) : super(key: key);
+  final String username;
 
   @override
   HomeState createState() => HomeState();
@@ -19,23 +20,6 @@ class HomeState extends State<HomePage> {
     _refresh = !_refresh;
     super.initState();
   }
-
-  List<String> _homePageSelections = <String>[
-    "List Events",
-    "Update Profile",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +108,10 @@ class HomeState extends State<HomePage> {
                           Navigator.push(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => new ParticipantMeetupDetail(
-                                      snapshot.data[index]["meetupID"])));
+                                  builder: (context) =>
+                                      new ParticipantMeetupDetail(
+                                          snapshot.data[index]["meetupID"],
+                                          widget.username)));
                         },
                       ),
                     );

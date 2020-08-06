@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantMeetupDetail extends StatefulWidget {
-  ParticipantMeetupDetail(String meetupID) {
+  ParticipantMeetupDetail(String meetupID, String username) {
     this.meetupID = meetupID;
+    this.username = username;
   }
 
   String meetupID;
+  String username;
 
   @override
   ParticipantMeetupDetailState createState() => ParticipantMeetupDetailState();
@@ -111,6 +113,26 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                         new BorderRadius.circular(20)),
                                 onPressed: () {
                                   // TODO Fill in
+                                  participantService
+                                      .registerMeetup(
+                                          widget.username, widget.meetupID)
+                                      .then((response) {
+                                    if (response.statusCode < 400) {
+                                      setState(() {
+                                        _refresh = !_refresh;
+                                      });
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                              content: Text(response.body)));
+                                    } else {
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text(
+                                              'You could not registered to meetup!')));
+                                    }
+                                  }).catchError((onError) {
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text('Something went wrong')));
+                                  });
                                 },
                                 child: Text(
                                   "Attend",

@@ -1,4 +1,5 @@
 import 'package:event_management_app/models/meetup.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:event_management_app/models/participant.dart';
@@ -92,6 +93,25 @@ class ParticipantService {
       return Meetup.fromJson(json.decode(response.body));
     } else {
       throw new Exception("Meetup could not found!");
+    }
+  }
+
+  Future<http.Response> registerMeetup(String username, String meetupID) async {
+    print(username);
+    print(meetupID);
+    http.Response response = await http.post(
+        "http://10.0.2.2:8080/participants/register-participant/" +
+            username +
+            "/" +
+            meetupID,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        });
+
+    if (response.statusCode < 400) {
+      return response;
+    } else {
+      return response;
     }
   }
 }

@@ -150,7 +150,8 @@ class LoginState extends State<Login> {
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('Successful Login')));
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                    MaterialPageRoute(
+                        builder: (context) => HomePage(username: username)),
                     (Route<dynamic> route) => false);
               } else {
                 Scaffold.of(context).showSnackBar(
