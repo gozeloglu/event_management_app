@@ -114,4 +114,18 @@ class ParticipantService {
       return response;
     }
   }
+
+  Future<Participant> getParticipantDetails(String username) async {
+    http.Response response = await http.get(
+        "http://10.0.2.2:8080/participants/participant-detail/" + username,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        });
+
+    if (response.statusCode < 400) {
+      return Participant.fromJson(json.decode(response.body));
+    } else {
+      throw new Exception("User could not found!");
+    }
+  }
 }

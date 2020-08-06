@@ -1,3 +1,4 @@
+import 'package:event_management_app/pages/profile.dart';
 import 'package:event_management_app/pages/sign_up.dart';
 import 'package:event_management_app/pages/home_page.dart';
 import 'package:event_management_app/pages/login.dart';
@@ -11,10 +12,13 @@ class Routes {
   static String get login => "/login";
 
   static String get signUp => "/signUp";
+
+  static String get profile => "/profile";
 }
 
 Map<String, Widget> routes = {
   Routes.home: HomePage(),
   Routes.signUp: SignUp(),
   Routes.login: Login(),
+  Routes.profile: Profile(),
 };

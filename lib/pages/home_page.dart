@@ -1,7 +1,10 @@
 import 'package:event_management_app/pages/participant_meetup_details.dart';
+import 'package:event_management_app/pages/profile.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../routes.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.username}) : super(key: key);
@@ -14,6 +17,7 @@ class HomePage extends StatefulWidget {
 class HomeState extends State<HomePage> {
   bool _refresh = false;
   ParticipantService participantService = new ParticipantService();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -24,6 +28,7 @@ class HomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -47,8 +52,15 @@ class HomeState extends State<HomePage> {
               title: Text("Profile"),
               onTap: () {
                 // TODO Fill in this part
-
-                Navigator.pop(context);
+                if (_scaffoldKey.currentState.isDrawerOpen) {
+                  _scaffoldKey.currentState.openEndDrawer();
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new Profile(
+                                username: widget.username,
+                              )));
+                }
               },
             ),
             ListTile(
