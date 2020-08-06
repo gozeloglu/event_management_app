@@ -1,3 +1,4 @@
+import 'package:event_management_app/pages/participant_meetup_details.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -120,6 +121,11 @@ class HomeState extends State<HomePage> {
                         subtitle: Text(meetupDetails[index], maxLines: 1),
                         onTap: () {
                           // TODO Details page
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new ParticipantMeetupDetail(
+                                      snapshot.data[index]["meetupID"])));
                         },
                       ),
                     );
