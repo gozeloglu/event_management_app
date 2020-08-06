@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:event_management_app/models/participant.dart';
+import 'package:event_management_app/pages/profile_update.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,10 @@ class ProfileState extends State<Profile> {
           future: participantService.getParticipantDetails(widget.username),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              String _firstName =
+                  Utf8Decoder().convert(snapshot.data.firstName.codeUnits);
+              String _lastName =
+                  Utf8Decoder().convert(snapshot.data.lastName.codeUnits);
               return Container(
                 padding: const EdgeInsets.all(16),
                 child: SingleChildScrollView(
@@ -47,9 +52,7 @@ class ProfileState extends State<Profile> {
                       Divider(),
                       Container(
                         child: Text(
-                          "Hello " +
-                              Utf8Decoder()
-                                  .convert(snapshot.data.firstName.codeUnits),
+                          "Hello " + _firstName,
                           style: TextStyle(fontSize: 30),
                         ),
                       ),
@@ -58,30 +61,52 @@ class ProfileState extends State<Profile> {
                         color: Colors.black,
                       ),
                       ListTile(
-                        title: Text("First Name"),
-                        subtitle: Text(Utf8Decoder()
-                            .convert(snapshot.data.firstName.codeUnits)),
+                        title: Text(
+                          "First Name",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(
+                          _firstName,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        leading: Icon(Icons.person),
                       ),
                       ListTile(
-                        title: Text("Last Name"),
-                        subtitle: Text(Utf8Decoder()
-                            .convert(snapshot.data.lastName.codeUnits)),
+                        title: Text(
+                          "Last Name",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(
+                          _lastName,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        leading: Icon(Icons.person),
                       ),
                       ListTile(
-                        title: Text("Username"),
-                        subtitle: Text(snapshot.data.userName),
+                        title: Text(
+                          "Username",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(
+                          snapshot.data.userName,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        leading: Icon(Icons.perm_identity),
                       ),
                       ListTile(
-                        title: Text("Email"),
-                        subtitle: Text(snapshot.data.email),
+                        title: Text("Email", style: TextStyle(fontSize: 20),),
+                        subtitle: Text(snapshot.data.email, style: TextStyle(fontSize: 18),),
+                        leading: Icon(Icons.email),
                       ),
                       ListTile(
-                        title: Text("Age"),
-                        subtitle: Text(snapshot.data.age.toString()),
+                        title: Text("Age", style: TextStyle(fontSize: 20),),
+                        subtitle: Text(snapshot.data.age.toString(), style: TextStyle(fontSize: 18),),
+                        leading: Icon(Icons.date_range),
                       ),
                       ListTile(
-                        title: Text("Identity Number"),
-                        subtitle: Text(snapshot.data.identityNumber),
+                        title: Text("Identity Number", style: TextStyle(fontSize: 20),),
+                        subtitle: Text(snapshot.data.identityNumber, style: TextStyle(fontSize: 18),),
+                        leading: Icon(Icons.confirmation_number),
                       ),
                       Divider(
                         height: 20.0,
@@ -102,11 +127,22 @@ class ProfileState extends State<Profile> {
                                         new BorderRadius.circular(20)),
                                 onPressed: () {
                                   // TODO Fill in
+                                  Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) => ProfileUpdate(
+                                              firstName: _firstName,
+                                              lastName: _lastName,
+                                              username: snapshot.data.userName,
+                                              email: snapshot.data.email,
+                                              age: snapshot.data.age,
+                                              identityNumber: snapshot
+                                                  .data.identityNumber)));
                                 },
                                 child: Text(
                                   "Update My Profile",
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
+                                      fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ),

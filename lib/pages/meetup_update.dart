@@ -33,8 +33,6 @@ class MeetupUpdate extends StatefulWidget {
 class MeetupUpdateState extends State<MeetupUpdate> {
   final _formKey = GlobalKey<FormState>();
 
-  final f = new DateFormat('dd.MM.yyyy');
-
   TextEditingController _meetupIdController;
   TextEditingController _meetupNameController;
   TextEditingController _detailsController;
