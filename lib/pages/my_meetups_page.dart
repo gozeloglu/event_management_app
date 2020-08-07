@@ -1,3 +1,4 @@
+import 'package:event_management_app/pages/participant_meetup_details.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,6 @@ class MyMeetupState extends State<MyMeetups> {
                 meetupNameList.add(snapshot.data[i]["meetupName"]);
                 meetupDetailList.add(snapshot.data[i]["details"]);
               }
-
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
@@ -55,13 +55,17 @@ class MyMeetupState extends State<MyMeetups> {
                         subtitle: Text(meetupDetailList[index], maxLines: 1),
                         onTap: () {
                           // TODO Details page
+                          _handleRebuildState(
+                              context, snapshot.data[index]["meetupID"]);
                         },
                       ),
                     );
                   });
             } else if (snapshot.data == null) {
+              print("Here");
               noDataMessage();
             }
+            print("HERERRERE");
             return Container(
               alignment: Alignment.center,
               height: 160.0,
@@ -82,5 +86,18 @@ class MyMeetupState extends State<MyMeetups> {
         ),
       ),
     );
+  }
+
+  void _handleRebuildState(BuildContext context, String meetupID) async {
+    final result = await Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) =>
+                new ParticipantMeetupDetail(meetupID, widget.username, false)));
+    if (result[0]) {
+      setState(() {});
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text(result[1], style: TextStyle(fontSize: 20))));
+    }
   }
 }

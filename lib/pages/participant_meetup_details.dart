@@ -4,13 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantMeetupDetail extends StatefulWidget {
-  ParticipantMeetupDetail(String meetupID, String username) {
+  ParticipantMeetupDetail(
+      String meetupID, String username, bool isRegisterPage) {
     this.meetupID = meetupID;
     this.username = username;
+    this.isRegisterPage = isRegisterPage;
   }
 
   String meetupID;
   String username;
+  bool isRegisterPage;
 
   @override
   ParticipantMeetupDetailState createState() => ParticipantMeetupDetailState();
@@ -28,6 +31,12 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
         elevation: 10,
         title: Text("Meetup Detail"),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop([true, "Unregistered to meetup"]);
+          },
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
@@ -108,37 +117,80 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                 color: Colors.green,
                                 height: 64,
                                 padding:
-                                    const EdgeInsets.fromLTRB(48, 0, 48, 0),
+                                    const EdgeInsets.fromLTRB(32, 0, 32, 0),
                                 shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(20)),
                                 onPressed: () {
                                   // TODO Fill in
-                                  participantService
-                                      .registerMeetup(
-                                          widget.username, widget.meetupID)
-                                      .then((response) {
-                                    if (response.statusCode < 400) {
-                                      setState(() {
-                                        _refresh = !_refresh;
-                                      });
+                                  if (widget.isRegisterPage) {
+                                    participantService
+                                        .registerMeetup(
+                                            widget.username, widget.meetupID)
+                                        .then((response) {
+                                      if (response.statusCode < 400) {
+                                        setState(() {
+                                          _refresh = !_refresh;
+                                        });
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                                content: Text(response.body,
+                                                    style: TextStyle(
+                                                        fontSize: 20))));
+                                      } else {
+                                        Scaffold.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                          'You could not registered to meetup!',
+                                          style: TextStyle(fontSize: 20),
+                                        )));
+                                      }
+                                    }).catchError((onError) {
                                       Scaffold.of(context).showSnackBar(
                                           SnackBar(
-                                              content: Text(response.body)));
-                                    } else {
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text(
-                                              'You could not registered to meetup!')));
-                                    }
-                                  }).catchError((onError) {
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text('Something went wrong')));
-                                  });
+                                              content: Text(
+                                                  'Something went wrong',
+                                                  style: TextStyle(
+                                                      fontSize: 20))));
+                                    });
+                                  } else {
+                                    participantService
+                                        .unRegisterMeetup(
+                                            widget.username, widget.meetupID)
+                                        .then((response) {
+                                      if (response.statusCode < 400) {
+                                        Navigator.of(context).pop([true, "Unregistered to meetup"]);
+                                        /*setState(() {
+                                          _refresh = !_refresh;
+                                        });
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                                content: Text(response.body,
+                                                    style: TextStyle(
+                                                        fontSize: 20))));*/
+                                      } else {
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                            content: Text(
+                                                'You could not unregistered to meetup!',
+                                                style:
+                                                    TextStyle(fontSize: 20))));
+                                      }
+                                    }).catchError((onError) {
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  'Something went wrong',
+                                                  style: TextStyle(
+                                                      fontSize: 20))));
+                                    });
+                                  }
                                 },
                                 child: Text(
-                                  "Attend",
+                                  widget.isRegisterPage
+                                      ? "Attend"
+                                      : "Unregister",
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
+                                      fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ),

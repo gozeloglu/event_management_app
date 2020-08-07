@@ -132,7 +132,7 @@ class HomeState extends State<HomePage> {
                                   builder: (context) =>
                                       new ParticipantMeetupDetail(
                                           snapshot.data[index]["meetupID"],
-                                          widget.username)));
+                                          widget.username, true)));
                         },
                       ),
                     );

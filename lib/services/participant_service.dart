@@ -102,8 +102,6 @@ class ParticipantService {
   /// @param meetupID specifies the meetup that the participant wants to attend
   /// @return HTTP Response object
   Future<http.Response> registerMeetup(String username, String meetupID) async {
-    print(username);
-    print(meetupID);
     http.Response response = await http.post(
         "http://10.0.2.2:8080/participants/register-participant/" +
             username +
@@ -166,6 +164,10 @@ class ParticipantService {
     }
   }
 
+  /// METHOD GET
+  /// This method fetches the all meetups that participant registered
+  /// @param username specifies the participant username that we want to get list
+  /// @return List of Meetup object
   Future<List<dynamic>> getMyMeetups(String username) async {
     http.Response response = await http.get(
       "http://10.0.2.2:8080/participants/all-meetups/" + username,
@@ -178,6 +180,23 @@ class ParticipantService {
       return (json.decode(response.body) as List);
     } else {
       throw new Exception("Failed to get meetups");
+    }
+  }
+
+  Future<http.Response> unRegisterMeetup(String username, String meetupID) async {
+    http.Response response = await http.post(
+        "http://10.0.2.2:8080/participants/unregister-participant/" +
+            username +
+            "/" +
+            meetupID,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        });
+
+    if (response.statusCode < 400) {
+      return response;
+    } else {
+      return response;
     }
   }
 }
