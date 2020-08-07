@@ -4,10 +4,13 @@ import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'admin/participant_details.dart';
+
 class ParticipantList extends StatefulWidget {
-  ParticipantList({Key key, this.meetupID}) : super(key: key);
+  ParticipantList({Key key, this.meetupID, this.meetupName}) : super(key: key);
 
   final String meetupID;
+  final String meetupName;
 
   ParticipantListState createState() => ParticipantListState();
 }
@@ -77,6 +80,16 @@ class ParticipantListState extends State<ParticipantList> {
                               ),
                               onTap: () {
                                 // TODO Participant details page
+                                /// ParticipantDetails
+                                Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) =>
+                                            ParticipantDetails(
+                                              username: participantUsernameList[
+                                                  index],
+                                              meetupName: widget.meetupName,
+                                            )));
                               },
                             ),
                           );

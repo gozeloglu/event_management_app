@@ -21,6 +21,7 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
   Future<Meetup> futureMeetup;
   AdminService adminService = new AdminService();
   bool _refresh = false;
+  String meetupName;
 
   @override
   void initState() {
@@ -44,8 +45,10 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
               Navigator.push(
                   context,
                   new MaterialPageRoute(
-                      builder: (context) =>
-                          ParticipantList(meetupID: widget.meetupId)));
+                      builder: (context) => ParticipantList(
+                            meetupID: widget.meetupId,
+                            meetupName: meetupName,
+                          )));
             },
           ),
         ],
@@ -55,6 +58,7 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
           future: adminService.getMeetup(widget.meetupId),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              meetupName = snapshot.data.meetupName;
               return Container(
                   padding: const EdgeInsets.all(16),
                   child: SingleChildScrollView(
