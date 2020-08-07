@@ -1,4 +1,5 @@
 import 'package:event_management_app/models/meetup.dart';
+import 'package:event_management_app/pages/map_page.dart';
 import 'package:event_management_app/pages/meetup_update.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,6 +39,15 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
         title: Text("Meetup Detail"),
         centerTitle: true,
         actions: [
+          IconButton(
+            icon: Icon(Icons.map),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => GoogleMapsPage()));
+            },
+          ),
           IconButton(
             icon: Icon(Icons.list),
             onPressed: () {
