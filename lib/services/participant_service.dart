@@ -145,7 +145,7 @@ class ParticipantService {
   Future<http.Response> updateProfile(Participant participant) async {
     http.Response response = await http.put(
         "http://10.0.2.2:8080/participants/update-profile/" +
-            participant.userName,
+            participant.identityNumber,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },
