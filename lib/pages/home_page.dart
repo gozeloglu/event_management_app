@@ -51,7 +51,10 @@ class HomeState extends State<HomePage> {
                   )),
             ),
             ListTile(
-              title: Text("Profile", style: TextStyle(fontSize: 20),),
+              title: Text(
+                "Profile",
+                style: TextStyle(fontSize: 20),
+              ),
               leading: Icon(Icons.person),
               onTap: () {
                 // TODO Fill in this part
@@ -67,7 +70,10 @@ class HomeState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text("My Meetups", style: TextStyle(fontSize: 20),),
+              title: Text(
+                "My Meetups",
+                style: TextStyle(fontSize: 20),
+              ),
               leading: Icon(Icons.event),
               onTap: () {
                 // TODO Fill in this part
@@ -88,7 +94,10 @@ class HomeState extends State<HomePage> {
               color: Colors.black,
             ),
             ListTile(
-              title: Text("Logout", style: TextStyle(fontSize: 20),),
+              title: Text(
+                "Logout",
+                style: TextStyle(fontSize: 20),
+              ),
               leading: Icon(Icons.exit_to_app),
               onTap: () {
                 if (_scaffoldKey.currentState.isDrawerOpen) {
@@ -151,9 +160,10 @@ class HomeState extends State<HomePage> {
                               new MaterialPageRoute(
                                   builder: (context) =>
                                       new ParticipantMeetupDetail(
-                                          snapshot.data[index]["meetupID"],
-                                          widget.username,
-                                          true)));
+                                          meetupID: snapshot.data[index]
+                                              ["meetupID"],
+                                          username: widget.username,
+                                          isRegisterPage: true)));
                         },
                       ),
                     );

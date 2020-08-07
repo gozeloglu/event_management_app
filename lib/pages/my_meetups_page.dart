@@ -92,8 +92,10 @@ class MyMeetupState extends State<MyMeetups> {
     final result = await Navigator.push(
         context,
         new MaterialPageRoute(
-            builder: (context) =>
-                new ParticipantMeetupDetail(meetupID, widget.username, false)));
+            builder: (context) => new ParticipantMeetupDetail(
+                meetupID: meetupID,
+                username: widget.username,
+                isRegisterPage: false)));
     if (result[0]) {
       setState(() {});
       Scaffold.of(context).showSnackBar(

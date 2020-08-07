@@ -4,6 +4,8 @@ import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'admin_participant_list_page.dart';
+
 class AdminMeetupDetail extends StatefulWidget {
   AdminMeetupDetail(String meetupId) {
     this.meetupId = meetupId;
@@ -36,11 +38,14 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Icon(Icons.list),
             onPressed: () {
-              setState(() {
-                _refresh = !_refresh;
-              });
+              // TODO List participants
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) =>
+                          ParticipantList(meetupID: widget.meetupId)));
             },
           ),
         ],

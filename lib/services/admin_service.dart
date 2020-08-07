@@ -37,21 +37,21 @@ class AdminService {
   /// @return HTTP Response object
   Future<http.Response> addNewMeetup(Meetup meetup) async {
     http.Response response =
-        await http.post("http://10.0.2.2:8080/meetups/create-new-meetup",
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: jsonEncode(<String, dynamic>{
-              "meetupID": meetup.meetupID,
-              "meetupName": meetup.meetupName,
-              "details": meetup.details,
-              "address": meetup.address,
-              "placeName": meetup.placeName,
-              "startDate": meetup.startDate,
-              "endDate": meetup.endDate,
-              "quota": meetup.quota,
-              "registeredUserCount": meetup.registeredCount,
-            }));
+    await http.post("http://10.0.2.2:8080/meetups/create-new-meetup",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "meetupID": meetup.meetupID,
+          "meetupName": meetup.meetupName,
+          "details": meetup.details,
+          "address": meetup.address,
+          "placeName": meetup.placeName,
+          "startDate": meetup.startDate,
+          "endDate": meetup.endDate,
+          "quota": meetup.quota,
+          "registeredUserCount": meetup.registeredCount,
+        }));
 
     if (response.statusCode < 400) {
       return response;
@@ -101,21 +101,21 @@ class AdminService {
   /// @return HTTP Response object
   Future<http.Response> updateMeetup(String meetupID, Meetup meetup) async {
     http.Response response =
-        await http.put("http://10.0.2.2:8080/meetups/update-meetup/" + meetupID,
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: jsonEncode(<String, dynamic>{
-              "meetupID": meetup.meetupID,
-              "meetupName": meetup.meetupName,
-              "details": meetup.details,
-              "address": meetup.address,
-              "placeName": meetup.placeName,
-              "startDate": meetup.startDate,
-              "endDate": meetup.endDate,
-              "quota": meetup.quota,
-              "registeredUserCount": meetup.registeredCount,
-            }));
+    await http.put("http://10.0.2.2:8080/meetups/update-meetup/" + meetupID,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "meetupID": meetup.meetupID,
+          "meetupName": meetup.meetupName,
+          "details": meetup.details,
+          "address": meetup.address,
+          "placeName": meetup.placeName,
+          "startDate": meetup.startDate,
+          "endDate": meetup.endDate,
+          "quota": meetup.quota,
+          "registeredUserCount": meetup.registeredCount,
+        }));
 
     if (response.statusCode < 400) {
       return response;
@@ -129,7 +129,6 @@ class AdminService {
   /// @param meetupID is id of the meetup that we want to delete
   /// @return HTTP Response object
   Future<http.Response> deleteMeetup(String meetupID) async {
-    print("id " + meetupID);
     http.Response response = await http.delete(
         "http://10.0.2.2:8080/meetups/delete-meetup/" + meetupID,
         headers: <String, String>{
@@ -140,6 +139,21 @@ class AdminService {
       return response;
     } else {
       return response;
+    }
+  }
+
+  Future<List<dynamic>> listAllParticipants(String meetupID) async {
+    http.Response response = await http.get(
+        "http://10.0.2.2:8080/admin/all-participants/" + meetupID,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        }
+    );
+
+    if (response.statusCode < 400) {
+      return (json.decode(response.body) as List);
+    } else {
+      throw new Exception("Failed to fetch participants");
     }
   }
 }

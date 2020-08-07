@@ -4,16 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantMeetupDetail extends StatefulWidget {
-  ParticipantMeetupDetail(
-      String meetupID, String username, bool isRegisterPage) {
-    this.meetupID = meetupID;
-    this.username = username;
-    this.isRegisterPage = isRegisterPage;
-  }
+  const ParticipantMeetupDetail(
+      {Key key, this.meetupID, this.username, this.isRegisterPage})
+      : super(key: key);
 
-  String meetupID;
-  String username;
-  bool isRegisterPage;
+  final String meetupID;
+  final String username;
+  final bool isRegisterPage;
 
   @override
   ParticipantMeetupDetailState createState() => ParticipantMeetupDetailState();
@@ -159,7 +156,8 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                             widget.username, widget.meetupID)
                                         .then((response) {
                                       if (response.statusCode < 400) {
-                                        Navigator.of(context).pop([true, "Unregistered to meetup"]);
+                                        Navigator.of(context).pop(
+                                            [true, "Unregistered to meetup"]);
                                         /*setState(() {
                                           _refresh = !_refresh;
                                         });

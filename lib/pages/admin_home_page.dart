@@ -1,3 +1,4 @@
+import 'package:event_management_app/components/tab_bar.dart';
 import 'package:event_management_app/models/meetup.dart';
 import 'package:event_management_app/pages/admin_add_meetup.dart';
 import 'package:event_management_app/pages/admin_meetup_detail.dart';
@@ -16,6 +17,7 @@ class AdminHomeState extends State<AdminHomePage> {
   bool _refresh = false;
   Future<List<dynamic>> meetupList;
   AdminService adminService = new AdminService();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -27,6 +29,88 @@ class AdminHomeState extends State<AdminHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: CircleAvatar(
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundImage: AssetImage('assets/logo.png'),
+                ),
+                radius: 95,
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.purple,
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  gradient: new LinearGradient(
+                    colors: [Colors.red, Colors.cyan],
+                  )),
+            ),
+            ListTile(
+              title: Text(
+                "Profile",
+                style: TextStyle(fontSize: 20),
+              ),
+              leading: Icon(Icons.person),
+              onTap: () {
+                // TODO Fill in this part
+                if (_scaffoldKey.currentState.isDrawerOpen) {
+                  _scaffoldKey.currentState.openEndDrawer();
+                  /*Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new Profile(
+                            username: widget.username,
+                          )));*/
+                }
+              },
+            ),
+            ListTile(
+              title: Text(
+                "My Meetups",
+                style: TextStyle(fontSize: 20),
+              ),
+              leading: Icon(Icons.event),
+              onTap: () {
+                // TODO Fill in this part
+
+                if (_scaffoldKey.currentState.isDrawerOpen) {
+                  _scaffoldKey.currentState.openEndDrawer();
+                  /*Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new MyMeetups(
+                            username: widget.username,
+                          )));*/
+                }
+              },
+            ),
+            Divider(
+              height: 100,
+              color: Colors.black,
+            ),
+            ListTile(
+              title: Text(
+                "Logout",
+                style: TextStyle(fontSize: 20),
+              ),
+              leading: Icon(Icons.exit_to_app),
+              onTap: () {
+                if (_scaffoldKey.currentState.isDrawerOpen) {
+                  _scaffoldKey.currentState.openEndDrawer();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => TabBarStateless()),
+                      (Route<dynamic> route) => false);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
