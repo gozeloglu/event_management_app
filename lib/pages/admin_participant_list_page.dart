@@ -30,61 +30,79 @@ class ParticipantListState extends State<ParticipantList> {
               future: adminService.listAllParticipants(widget.meetupID),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  List<String> participantFirstNameList = List();
-                  List<String> participantLastNameList = List();
-                  List<String> participantUsernameList = List();
+                  if (snapshot.data.length == 0) {
+                    return Center(
+                      child: Text(
+                        "There is no participant!",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    );
+                  } else {
+                    List<String> participantFirstNameList = List();
+                    List<String> participantLastNameList = List();
+                    List<String> participantUsernameList = List();
 
-                  for (int i = 0; i < snapshot.data.length; i++) {
-                    // Utf8Decoder().convert(snapshot.data.lastName.codeUnits)
-                    participantFirstNameList.add(Utf8Decoder()
-                        .convert(snapshot.data[i]["firstName"].codeUnits));
-                    participantLastNameList.add(Utf8Decoder()
-                        .convert(snapshot.data[i]["lastName"].codeUnits));
-                    participantUsernameList.add(Utf8Decoder()
-                        .convert(snapshot.data[i]["userName"].codeUnits));
+                    for (int i = 0; i < snapshot.data.length; i++) {
+                      // Utf8Decoder().convert(snapshot.data.lastName.codeUnits)
+                      participantFirstNameList.add(Utf8Decoder()
+                          .convert(snapshot.data[i]["firstName"].codeUnits));
+                      participantLastNameList.add(Utf8Decoder()
+                          .convert(snapshot.data[i]["lastName"].codeUnits));
+                      participantUsernameList.add(Utf8Decoder()
+                          .convert(snapshot.data[i]["userName"].codeUnits));
+                    }
+
+                    return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(15)),
+                            elevation: 5,
+                            margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                            child: ListTile(
+                              trailing: Icon(Icons.arrow_right),
+                              leading: Icon(Icons.person),
+                              title: Text(
+                                participantFirstNameList[index] +
+                                    " " +
+                                    participantLastNameList[index],
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                participantUsernameList[index],
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              onTap: () {
+                                // TODO Participant details page
+                              },
+                            ),
+                          );
+                        });
                   }
-
-                  return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(15)),
-                          elevation: 5,
-                          margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                          child: ListTile(
-                            trailing: Icon(Icons.arrow_right),
-                            leading: Icon(Icons.person),
-                            title: Text(participantFirstNameList[index] +
-                                " " +
-                                participantLastNameList[index]),
-                            subtitle: Text(participantUsernameList[index]),
-                            onTap: () {
-                              // TODO Participant details page
-                            },
-                          ),
-                        );
-                      });
                 } else if (snapshot.data == null) {
-                  noDataMessage();
+                  print("No data");
+                  print(snapshot.data);
+                  //noDataMessage();
+                  return Center(
+                    child: Text(
+                      "Book basket is empty!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Text(
+                      "There is no participant!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  );
                 }
-                return Container(
-                  alignment: Alignment.center,
-                  height: 160.0,
-                  child: CircularProgressIndicator(),
-                );
               }),
         ));
-  }
-
-  Widget noDataMessage() {
-    return Center(
-      child: Text(
-        "There is no meetup!",
-        style: TextStyle(
-          fontSize: 20,
-        ),
-      ),
-    );
   }
 }
