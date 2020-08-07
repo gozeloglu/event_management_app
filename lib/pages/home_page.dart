@@ -1,3 +1,4 @@
+import 'package:event_management_app/components/tab_bar.dart';
 import 'package:event_management_app/pages/participant_meetup_details.dart';
 import 'package:event_management_app/pages/profile.dart';
 import 'package:event_management_app/services/participant_service.dart';
@@ -50,7 +51,8 @@ class HomeState extends State<HomePage> {
                   )),
             ),
             ListTile(
-              title: Text("Profile"),
+              title: Text("Profile", style: TextStyle(fontSize: 20),),
+              leading: Icon(Icons.person),
               onTap: () {
                 // TODO Fill in this part
                 if (_scaffoldKey.currentState.isDrawerOpen) {
@@ -65,7 +67,8 @@ class HomeState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text("My Meetups"),
+              title: Text("My Meetups", style: TextStyle(fontSize: 20),),
+              leading: Icon(Icons.event),
               onTap: () {
                 // TODO Fill in this part
 
@@ -79,7 +82,24 @@ class HomeState extends State<HomePage> {
                               )));
                 }
               },
-            )
+            ),
+            Divider(
+              height: 100,
+              color: Colors.black,
+            ),
+            ListTile(
+              title: Text("Logout", style: TextStyle(fontSize: 20),),
+              leading: Icon(Icons.exit_to_app),
+              onTap: () {
+                if (_scaffoldKey.currentState.isDrawerOpen) {
+                  _scaffoldKey.currentState.openEndDrawer();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => TabBarStateless()),
+                      (Route<dynamic> route) => false);
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -132,7 +152,8 @@ class HomeState extends State<HomePage> {
                                   builder: (context) =>
                                       new ParticipantMeetupDetail(
                                           snapshot.data[index]["meetupID"],
-                                          widget.username, true)));
+                                          widget.username,
+                                          true)));
                         },
                       ),
                     );
