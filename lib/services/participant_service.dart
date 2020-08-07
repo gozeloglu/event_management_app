@@ -165,4 +165,19 @@ class ParticipantService {
       return response;
     }
   }
+
+  Future<List<dynamic>> getMyMeetups(String username) async {
+    http.Response response = await http.get(
+      "http://10.0.2.2:8080/participants/all-meetups/" + username,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+    );
+
+    if (response.statusCode < 400) {
+      return (json.decode(response.body) as List);
+    } else {
+      throw new Exception("Failed to get meetups");
+    }
+  }
 }

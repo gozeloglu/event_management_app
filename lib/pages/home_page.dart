@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../routes.dart';
+import 'my_meetups_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.username}) : super(key: key);
@@ -68,7 +69,15 @@ class HomeState extends State<HomePage> {
               onTap: () {
                 // TODO Fill in this part
 
-                Navigator.pop(context);
+                if (_scaffoldKey.currentState.isDrawerOpen) {
+                  _scaffoldKey.currentState.openEndDrawer();
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new MyMeetups(
+                                username: widget.username,
+                              )));
+                }
               },
             )
           ],
