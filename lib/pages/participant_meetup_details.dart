@@ -33,7 +33,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-              Navigator.of(context).pop([false]);
+            Navigator.of(context).pop([false]);
           },
         ),
         actions: [
@@ -46,7 +46,6 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                       builder: (context) => GoogleMapsPage()));
             },
           ),
-
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {
@@ -170,14 +169,6 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                       if (response.statusCode < 400) {
                                         Navigator.of(context).pop(
                                             [true, "Unregistered to meetup"]);
-                                        /*setState(() {
-                                          _refresh = !_refresh;
-                                        });
-                                        Scaffold.of(context).showSnackBar(
-                                            SnackBar(
-                                                content: Text(response.body,
-                                                    style: TextStyle(
-                                                        fontSize: 20))));*/
                                       } else {
                                         Scaffold.of(context).showSnackBar(SnackBar(
                                             content: Text(

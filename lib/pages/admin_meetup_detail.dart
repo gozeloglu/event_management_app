@@ -21,12 +21,10 @@ class AdminMeetupDetail extends StatefulWidget {
 class MeetupDetailState extends State<AdminMeetupDetail> {
   Future<Meetup> futureMeetup;
   AdminService adminService = new AdminService();
-  bool _refresh = false;
   String meetupName;
 
   @override
   void initState() {
-    print(widget.meetupId);
     futureMeetup = adminService.getMeetup(widget.meetupId);
     super.initState();
   }
@@ -38,6 +36,12 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
         elevation: 10,
         title: Text("Meetup Detail"),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.map),
@@ -133,12 +137,8 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                         .deleteMeetup(widget.meetupId)
                                         .then((response) {
                                       if (response.statusCode < 400) {
-                                        Scaffold.of(context).showSnackBar(
-                                            SnackBar(
-                                                content:
-                                                    Text('Meetup is deleted')));
+                                        Navigator.of(context).pop(true);
                                       } else {
-                                        print(response.statusCode);
                                         Scaffold.of(context).showSnackBar(
                                             SnackBar(
                                                 content: Text(

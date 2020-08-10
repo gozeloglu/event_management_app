@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'admin/admin_add_meetup.dart';
 import 'admin/admin_profile.dart';
 import 'admin/admin_qr_list.dart';
-import 'admin/admin_report.dart';
 import 'admin/admin_report_list.dart';
 
 class AdminHomePage extends StatefulWidget {
@@ -26,7 +25,6 @@ class AdminHomeState extends State<AdminHomePage> {
 
   @override
   void initState() {
-    print("init state");
     meetupList = adminService.getAllMeetups();
     super.initState();
   }
@@ -133,7 +131,7 @@ class AdminHomeState extends State<AdminHomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          _handleRebuildState(context);
+          _handleMeetupAddState(context);
         },
       ),
       appBar: AppBar(
@@ -178,11 +176,8 @@ class AdminHomeState extends State<AdminHomePage> {
                         title: Text(meetupName[index]),
                         subtitle: Text(meetupDetails[index], maxLines: 1),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => new AdminMeetupDetail(
-                                      snapshot.data[index]["meetupID"])));
+                          _handleMeetupDeleteState(
+                              context, snapshot.data[index]["meetupID"]);
                         },
                       ),
                     );
@@ -212,18 +207,45 @@ class AdminHomeState extends State<AdminHomePage> {
     );
   }
 
-  void _handleRebuildState(BuildContext context) async {
+  /// This function handles the meetup add page state management
+  /// If user uses the phone's back button or app bar back button
+  /// it just set states
+  /// If meetup is added successfully, it shows up a snack bar
+  void _handleMeetupAddState(BuildContext context) async {
     final result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => AdminAddMeetup()));
-    print(result);
-    if (result) {
+
+    if (result == null || result == false) {
       setState(() {});
-      final snackbar = SnackBar(
+    } else if (result) {
+      setState(() {});
+      final snackBar = SnackBar(
         content: Text("New meetup is added!", style: TextStyle(fontSize: 20)),
       );
-      _scaffoldKey.currentState.showSnackBar(snackbar);
-    } else {
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
+  }
+
+  /// This function handles the meetup delete state management
+  /// If user uses the phone's back button or app bar back button
+  /// it just set states
+  /// If meetup is deleted successfully, it shows up a snack bar
+  void _handleMeetupDeleteState(BuildContext context, String meetupID) async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => new AdminMeetupDetail(meetupID)));
+
+    if (result == null || result == false) {
       setState(() {});
+    } else if (result) {
+      setState(() {});
+      final snackBar = SnackBar(
+          content: Text(
+        "Meetup is deleted",
+        style: TextStyle(fontSize: 20),
+      ));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
     }
   }
 }
