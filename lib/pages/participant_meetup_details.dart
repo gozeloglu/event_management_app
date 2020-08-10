@@ -33,7 +33,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop([true, "Unregistered to meetup"]);
+              Navigator.of(context).pop([false]);
           },
         ),
         actions: [
