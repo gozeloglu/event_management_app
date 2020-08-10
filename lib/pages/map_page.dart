@@ -35,7 +35,7 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
         markerId: MarkerId(_lastMapPosition.toString()),
         position: _lastMapPosition,
         infoWindow: InfoWindow(
-          title: 'Really cool place',
+          title: 'Hacettepe University CS Building',
           snippet: '5 Star Rating',
         ),
         icon: BitmapDescriptor.defaultMarker,
@@ -55,8 +55,9 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
+          title: Text('Google Maps'),
+          backgroundColor: Colors.blue[700],
+          centerTitle: true,
         ),
         body: Stack(
           children: <Widget>[

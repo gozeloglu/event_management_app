@@ -3,6 +3,8 @@ import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'map_page.dart';
+
 class ParticipantMeetupDetail extends StatefulWidget {
   const ParticipantMeetupDetail(
       {Key key, this.meetupID, this.username, this.isRegisterPage})
@@ -35,6 +37,16 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
           },
         ),
         actions: [
+          IconButton(
+            icon: Icon(Icons.map),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => GoogleMapsPage()));
+            },
+          ),
+
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {
