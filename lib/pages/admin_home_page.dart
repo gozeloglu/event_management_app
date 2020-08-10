@@ -1,10 +1,10 @@
 import 'package:event_management_app/components/tab_bar.dart';
-import 'package:event_management_app/pages/admin_add_meetup.dart';
 import 'package:event_management_app/pages/admin_meetup_detail.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'admin/admin_add_meetup.dart';
 import 'admin/admin_profile.dart';
 import 'admin/admin_qr_list.dart';
 import 'admin/admin_report.dart';
@@ -133,8 +133,7 @@ class AdminHomeState extends State<AdminHomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AdminAddMeetup()));
+          _handleRebuildState(context);
         },
       ),
       appBar: AppBar(
@@ -211,5 +210,20 @@ class AdminHomeState extends State<AdminHomePage> {
         ),
       ),
     );
+  }
+
+  void _handleRebuildState(BuildContext context) async {
+    final result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => AdminAddMeetup()));
+    print(result);
+    if (result) {
+      setState(() {});
+      final snackbar = SnackBar(
+        content: Text("New meetup is added!", style: TextStyle(fontSize: 20)),
+      );
+      _scaffoldKey.currentState.showSnackBar(snackbar);
+    } else {
+      setState(() {});
+    }
   }
 }

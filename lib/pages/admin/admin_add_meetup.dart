@@ -45,6 +45,12 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
         elevation: 10,
         title: Text("Add New Meetup"),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
       ),
       body: Builder(
         builder: (context) => Form(
@@ -316,8 +322,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
             );
             adminService.addNewMeetup(meetup).then((response) {
               if (response.statusCode < 400) {
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('New meetup is added')));
+                Navigator.of(context).pop(true);
               } else {
                 Scaffold.of(context).showSnackBar(
                     SnackBar(content: Text('Meetup could not saved')));

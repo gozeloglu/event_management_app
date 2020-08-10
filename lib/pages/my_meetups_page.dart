@@ -62,10 +62,8 @@ class MyMeetupState extends State<MyMeetups> {
                     );
                   });
             } else if (snapshot.data == null) {
-              print("Here");
               noDataMessage();
             }
-            print("HERERRERE");
             return Container(
               alignment: Alignment.center,
               height: 160.0,
