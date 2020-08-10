@@ -1,14 +1,16 @@
 import 'package:event_management_app/components/tab_bar.dart';
 import 'package:event_management_app/models/meetup.dart';
+import 'package:event_management_app/pages/admin/admin_qr_code.dart';
 import 'package:event_management_app/pages/admin_add_meetup.dart';
 import 'package:event_management_app/pages/admin_meetup_detail.dart';
+import 'package:event_management_app/pages/profile.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AdminHomePage extends StatefulWidget {
-  AdminHomePage({Key key}) : super(key: key);
-
+  AdminHomePage({Key key, this.username}) : super(key: key);
+  final String username;
   @override
   AdminHomeState createState() => AdminHomeState();
 }
@@ -59,18 +61,18 @@ class AdminHomeState extends State<AdminHomePage> {
                 // TODO Fill in this part
                 if (_scaffoldKey.currentState.isDrawerOpen) {
                   _scaffoldKey.currentState.openEndDrawer();
-                  /*Navigator.push(
+                  Navigator.push(
                       context,
                       new MaterialPageRoute(
                           builder: (context) => new Profile(
                             username: widget.username,
-                          )));*/
+                          )));
                 }
               },
             ),
             ListTile(
               title: Text(
-                "My Meetups",
+                "Report",
                 style: TextStyle(fontSize: 20),
               ),
               leading: Icon(Icons.event),
@@ -79,12 +81,10 @@ class AdminHomeState extends State<AdminHomePage> {
 
                 if (_scaffoldKey.currentState.isDrawerOpen) {
                   _scaffoldKey.currentState.openEndDrawer();
-                  /*Navigator.push(
+                  Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new MyMeetups(
-                            username: widget.username,
-                          )));*/
+                          builder: (context) => new QRCode()));
                 }
               },
             ),

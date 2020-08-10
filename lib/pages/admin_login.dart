@@ -152,7 +152,10 @@ class AdminLoginState extends State<AdminLogin> {
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('Successful Login')));
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => AdminHomePage()),
+                    MaterialPageRoute(
+                        builder: (context) => AdminHomePage(
+                              username: usernameEditingController.text,
+                            )),
                     (Route<dynamic> route) => false);
               } else {
                 Scaffold.of(context).showSnackBar(
