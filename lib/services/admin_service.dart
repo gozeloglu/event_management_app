@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:event_management_app/models/admin.dart';
+import 'package:event_management_app/models/admin_dto.dart';
 import 'package:event_management_app/models/meetup.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,21 +38,21 @@ class AdminService {
   /// @return HTTP Response object
   Future<http.Response> addNewMeetup(Meetup meetup) async {
     http.Response response =
-    await http.post("http://10.0.2.2:8080/meetups/create-new-meetup",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          "meetupID": meetup.meetupID,
-          "meetupName": meetup.meetupName,
-          "details": meetup.details,
-          "address": meetup.address,
-          "placeName": meetup.placeName,
-          "startDate": meetup.startDate,
-          "endDate": meetup.endDate,
-          "quota": meetup.quota,
-          "registeredUserCount": meetup.registeredCount,
-        }));
+        await http.post("http://10.0.2.2:8080/meetups/create-new-meetup",
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              "meetupID": meetup.meetupID,
+              "meetupName": meetup.meetupName,
+              "details": meetup.details,
+              "address": meetup.address,
+              "placeName": meetup.placeName,
+              "startDate": meetup.startDate,
+              "endDate": meetup.endDate,
+              "quota": meetup.quota,
+              "registeredUserCount": meetup.registeredCount,
+            }));
 
     if (response.statusCode < 400) {
       return response;
@@ -101,21 +102,21 @@ class AdminService {
   /// @return HTTP Response object
   Future<http.Response> updateMeetup(String meetupID, Meetup meetup) async {
     http.Response response =
-    await http.put("http://10.0.2.2:8080/meetups/update-meetup/" + meetupID,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          "meetupID": meetup.meetupID,
-          "meetupName": meetup.meetupName,
-          "details": meetup.details,
-          "address": meetup.address,
-          "placeName": meetup.placeName,
-          "startDate": meetup.startDate,
-          "endDate": meetup.endDate,
-          "quota": meetup.quota,
-          "registeredUserCount": meetup.registeredCount,
-        }));
+        await http.put("http://10.0.2.2:8080/meetups/update-meetup/" + meetupID,
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              "meetupID": meetup.meetupID,
+              "meetupName": meetup.meetupName,
+              "details": meetup.details,
+              "address": meetup.address,
+              "placeName": meetup.placeName,
+              "startDate": meetup.startDate,
+              "endDate": meetup.endDate,
+              "quota": meetup.quota,
+              "registeredUserCount": meetup.registeredCount,
+            }));
 
     if (response.statusCode < 400) {
       return response;
@@ -142,18 +143,40 @@ class AdminService {
     }
   }
 
+  /// METHOD: GET
+  /// This method returns all participants who are registered to the
+  /// meetup which is given as a parameter
+  /// @param meetupID is the id of the meetup which we want to fetch
+  /// participant list
+  /// @return List of Participant objects
   Future<List<dynamic>> listAllParticipants(String meetupID) async {
     http.Response response = await http.get(
         "http://10.0.2.2:8080/admin/all-participants/" + meetupID,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-        }
-    );
+        });
 
     if (response.statusCode < 400) {
       return (json.decode(response.body) as List);
     } else {
       throw new Exception("Failed to fetch participants");
+    }
+  }
+
+  /// METHOD: GET
+  /// This method returns the details of the admin
+  /// @param username is the admin's username
+  /// @return AdminDTO object which includes information of the admin
+  Future<AdminDTO> getAdminDetails(String username) async {
+    http.Response response = await http.get(
+        "http://10.0.2.2:8080/admin/admin-details/" + username,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        });
+    if (response.statusCode < 400) {
+      return AdminDTO.fromJson(json.decode(response.body));
+    } else {
+      throw new Exception("Admin could not found!");
     }
   }
 }
