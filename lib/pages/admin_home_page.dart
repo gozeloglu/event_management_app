@@ -8,6 +8,8 @@ import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'admin/admin_qr_list.dart';
+
 class AdminHomePage extends StatefulWidget {
   AdminHomePage({Key key, this.username}) : super(key: key);
   final String username;
@@ -72,10 +74,10 @@ class AdminHomeState extends State<AdminHomePage> {
             ),
             ListTile(
               title: Text(
-                "Report",
+                "QR Code",
                 style: TextStyle(fontSize: 20),
               ),
-              leading: Icon(Icons.event),
+              leading: Icon(Icons.camera),
               onTap: () {
                 // TODO Fill in this part
 
@@ -84,7 +86,7 @@ class AdminHomeState extends State<AdminHomePage> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new QRCode()));
+                          builder: (context) => new QRCodeList()));
                 }
               },
             ),
