@@ -1,13 +1,13 @@
 import 'package:event_management_app/components/tab_bar.dart';
-import 'package:event_management_app/pages/admin_meetup_detail.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'admin/admin_add_meetup.dart';
-import 'admin/admin_profile.dart';
-import 'admin/admin_qr_list.dart';
-import 'admin/admin_report_list.dart';
+import 'admin_add_meetup.dart';
+import 'admin_meetup_detail.dart';
+import 'admin_profile.dart';
+import 'admin_qr_list.dart';
+import 'admin_report_list.dart';
 
 class AdminHomePage extends StatefulWidget {
   AdminHomePage({Key key, this.username}) : super(key: key);

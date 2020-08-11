@@ -2,7 +2,7 @@ import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../admin_meetup_detail.dart';
+import 'admin_meetup_detail.dart';
 import 'admin_qr_code.dart';
 
 class QRCodeList extends StatefulWidget {

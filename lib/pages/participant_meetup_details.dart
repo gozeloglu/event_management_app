@@ -20,7 +20,6 @@ class ParticipantMeetupDetail extends StatefulWidget {
 
 class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
   bool _refresh = false;
-  bool _isButtonDisabled = false;
   ParticipantService participantService = new ParticipantService();
 
   @override

@@ -79,6 +79,12 @@ class MeetupUpdateState extends State<MeetupUpdate> {
           elevation: 10,
           title: Text("Meetup Update"),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+          ),
         ),
         body: Builder(
             builder: (context) => Form(
@@ -352,20 +358,30 @@ class MeetupUpdateState extends State<MeetupUpdate> {
             );
             adminService.updateMeetup(widget.meetupID, meetup).then((response) {
               if (response.statusCode < 400) {
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('Meetup is updaetd')));
+                Navigator.of(context).pop(true);
+                /*Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('Meetup is updaetd')));*/
               } else {
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Meetup could not updated')));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  'Meetup could not updated',
+                  style: TextStyle(fontSize: 20),
+                )));
               }
             }).catchError((onError) {
-              Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Something went wrong')));
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                'Something went wrong',
+                style: TextStyle(fontSize: 20),
+              )));
             });
           } else {
             // If fields are empty
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Error!')));
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text(
+              'Error!',
+              style: TextStyle(fontSize: 20),
+            )));
           }
         },
       ),

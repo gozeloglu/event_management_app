@@ -1,11 +1,11 @@
 import 'package:event_management_app/models/meetup.dart';
 import 'package:event_management_app/pages/map_page.dart';
-import 'package:event_management_app/pages/meetup_update.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'admin_participant_list_page.dart';
+import '../admin_participant_list_page.dart';
+import 'meetup_update.dart';
 
 class AdminMeetupDetail extends StatefulWidget {
   AdminMeetupDetail(String meetupId) {
@@ -22,6 +22,7 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
   Future<Meetup> futureMeetup;
   AdminService adminService = new AdminService();
   String meetupName;
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 10,
         title: Text("Meetup Detail"),
@@ -171,7 +173,22 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                       borderRadius:
                                           new BorderRadius.circular(20)),
                                   onPressed: () {
-                                    // TODO Update page
+                                    /// TODO First look at here
+                                    Meetup updatedMeetup = Meetup(
+                                        meetupID: snapshot.data.meetupID,
+                                        meetupName: snapshot.data.meetupName,
+                                        details: snapshot.data.details,
+                                        address: snapshot.data.address,
+                                        placeName: snapshot.data.placeName,
+                                        startDate: snapshot.data.startDate,
+                                        endDate: snapshot.data.endDate,
+                                        quota: snapshot.data.quota,
+                                        registeredCount:
+                                            snapshot.data.registeredCount);
+                                    _handleUpdateMeetupState(
+                                        context, updatedMeetup);
+
+                                    /*
                                     Navigator.push(
                                         context,
                                         new MaterialPageRoute(
@@ -186,7 +203,7 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                                     snapshot.data.endDate,
                                                     snapshot.data.quota,
                                                     snapshot.data
-                                                        .registeredCount)));
+                                                        .registeredCount)));*/
                                   },
                                   child: Text(
                                     "Update",
@@ -224,5 +241,33 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
         ),
       ),
     );
+  }
+
+  void _handleUpdateMeetupState(BuildContext context, Meetup meetup) async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => new MeetupUpdate(
+                meetup.meetupID,
+                meetup.meetupName,
+                meetup.details,
+                meetup.address,
+                meetup.placeName,
+                meetup.startDate,
+                meetup.endDate,
+                meetup.quota,
+                meetup.registeredCount)));
+
+    if (result == null || result == false) {
+      setState(() {});
+    } else {
+      setState(() {});
+      final snackBar = SnackBar(
+          content: Text(
+        "Meetup is updated",
+        style: TextStyle(fontSize: 20),
+      ));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
   }
 }

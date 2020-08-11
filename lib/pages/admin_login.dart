@@ -1,10 +1,11 @@
 import 'package:event_management_app/models/admin.dart';
-import 'package:event_management_app/pages/admin_home_page.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:event_management_app/pages/home_page.dart';
 import 'package:event_management_app/routes.dart';
+
+import 'admin/admin_home_page.dart';
 
 class AdminLoginStateless extends StatelessWidget {
   @override
