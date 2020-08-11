@@ -21,6 +21,13 @@ class ParticipantMeetupDetail extends StatefulWidget {
 class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
   bool _refresh = false;
   ParticipantService participantService = new ParticipantService();
+  TextEditingController _questionTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    _questionTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +53,9 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Icon(Icons.question_answer),
             onPressed: () {
-              setState(() {
-                _refresh = !_refresh;
-              });
+              _displayQuestionDialog(context);
             },
           ),
         ],
@@ -224,5 +229,52 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
         ),
       ),
     );
+  }
+
+  _displayQuestionDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              "Ask Your Question",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: TextFormField(
+              controller: _questionTextController,
+              maxLines: 4,
+              maxLength: 240,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), labelText: "Your Question"),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return "You should fill in the question field.";
+                } else {
+                  return null;
+                }
+              },
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                  onPressed: () {},
+                  child: new Text(
+                    "Cancel",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  )),
+              new FlatButton(
+                  onPressed: () {},
+                  child: new Text(
+                    "Ask",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green),
+                  ))
+            ],
+          );
+        });
   }
 }
