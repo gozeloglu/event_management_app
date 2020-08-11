@@ -1,11 +1,11 @@
 import 'package:event_management_app/components/tab_bar.dart';
-import 'package:event_management_app/pages/participant_meetup_details.dart';
-import 'package:event_management_app/pages/profile.dart';
+import 'package:event_management_app/pages/participant/participant_meetup_details.dart';
+import 'package:event_management_app/pages/participant/profile.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../routes.dart';
+import '../../routes.dart';
 import 'my_meetups_page.dart';
 
 class HomePage extends StatefulWidget {

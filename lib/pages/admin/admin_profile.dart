@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:event_management_app/models/admin.dart';
 import 'package:event_management_app/models/admin_dto.dart';
 import 'package:event_management_app/models/participant.dart';
-import 'package:event_management_app/pages/profile_update.dart';
+import 'file:///C:/Users/gozel/OneDrive/Desktop/event_management_app/event_management_app/lib/pages/participant/profile_update.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';

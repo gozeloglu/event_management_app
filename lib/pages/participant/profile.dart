@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:event_management_app/models/participant.dart';
-import 'package:event_management_app/pages/profile_update.dart';
+import 'package:event_management_app/pages/participant/profile_update.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -166,7 +166,9 @@ class ProfileState extends State<Profile> {
                                               age: snapshot.data.age,
                                               identityNumber: snapshot
                                                   .data.identityNumber)));
-                                  if (result) {
+                                  if (result == null) {
+                                    setState(() {});
+                                  } else if (result) {
                                     setState(() {});
                                   }
                                 },

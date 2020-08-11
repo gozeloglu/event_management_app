@@ -3,7 +3,7 @@ import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'map_page.dart';
+import '../map_page.dart';
 
 class ParticipantMeetupDetail extends StatefulWidget {
   const ParticipantMeetupDetail(

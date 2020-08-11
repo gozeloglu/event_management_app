@@ -1,5 +1,5 @@
 import 'package:event_management_app/models/participant.dart';
-import 'package:event_management_app/pages/profile.dart';
+import 'file:///C:/Users/gozel/OneDrive/Desktop/event_management_app/event_management_app/lib/pages/participant/profile.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

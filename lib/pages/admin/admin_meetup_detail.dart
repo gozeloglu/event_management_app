@@ -243,6 +243,9 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
     );
   }
 
+  /// This method handles the state management after update page
+  /// @param context is the page's context
+  /// @param meetup stores the updated meetup information
   void _handleUpdateMeetupState(BuildContext context, Meetup meetup) async {
     final result = await Navigator.push(
         context,
