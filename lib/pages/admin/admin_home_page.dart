@@ -156,10 +156,12 @@ class AdminHomeState extends State<AdminHomePage> {
             if (snapshot.hasData) {
               List<String> meetupName = List();
               List<String> meetupDetails = List();
+              List<String> startDates = List();
 
               for (int i = 0; i < snapshot.data.length; i++) {
                 meetupName.add(snapshot.data[i]["meetupName"]);
                 meetupDetails.add(snapshot.data[i]["details"]);
+                startDates.add(snapshot.data[i]["startDate"]);
               }
 
               return ListView.builder(
@@ -177,7 +179,9 @@ class AdminHomeState extends State<AdminHomePage> {
                         subtitle: Text(meetupDetails[index], maxLines: 1),
                         onTap: () {
                           _handleMeetupDeleteState(
-                              context, snapshot.data[index]["meetupID"]);
+                              context,
+                              snapshot.data[index]["meetupID"],
+                              startDates[index].split("-"));
                         },
                       ),
                     );
@@ -230,11 +234,13 @@ class AdminHomeState extends State<AdminHomePage> {
   /// If user uses the phone's back button or app bar back button
   /// it just set states
   /// If meetup is deleted successfully, it shows up a snack bar
-  void _handleMeetupDeleteState(BuildContext context, String meetupID) async {
+  void _handleMeetupDeleteState(
+      BuildContext context, String meetupID, List<String> startDate) async {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new AdminMeetupDetail(meetupID)));
+            builder: (context) => new AdminMeetupDetail(meetupID,
+                _isMeetupToday(startDate) ? true : false)));
 
     if (result == null || result == false) {
       setState(() {});
@@ -246,6 +252,30 @@ class AdminHomeState extends State<AdminHomePage> {
         style: TextStyle(fontSize: 20),
       ));
       _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
+  }
+
+  bool _isMeetupToday(List<String> meetupDate) {
+    int meetupYear = int.parse(meetupDate[0]);
+    int meeupMonth = int.parse(meetupDate[1]);
+    int meetupDay = int.parse(meetupDate[2]);
+
+    int todayDay = DateTime.now().toLocal().day.toInt();
+    int todayMonth = DateTime.now().toLocal().month.toInt();
+    int todayYear = DateTime.now().toLocal().year.toInt();
+
+    if (meetupDay == todayDay) {
+      if (meeupMonth == todayMonth) {
+        if (meetupYear == todayYear) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
     }
   }
 }

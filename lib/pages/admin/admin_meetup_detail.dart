@@ -8,11 +8,13 @@ import '../admin_participant_list_page.dart';
 import 'meetup_update.dart';
 
 class AdminMeetupDetail extends StatefulWidget {
-  AdminMeetupDetail(String meetupId) {
+  AdminMeetupDetail(String meetupId, bool _canAnswer) {
     this.meetupId = meetupId;
+    this.canAnswer = _canAnswer;
   }
 
   String meetupId;
+  bool canAnswer;
 
   @override
   MeetupDetailState createState() => MeetupDetailState();
@@ -69,6 +71,12 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
           ),
         ],
       ),
+      floatingActionButton: widget.canAnswer ? FloatingActionButton(
+        child: Icon(Icons.question_answer),
+        onPressed: () {
+
+        },
+      ) : null,
       body: Center(
         child: FutureBuilder<Meetup>(
           future: adminService.getMeetup(widget.meetupId),
