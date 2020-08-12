@@ -1,5 +1,7 @@
 import 'package:event_management_app/models/meetup.dart';
+import 'package:event_management_app/models/question.dart';
 import 'package:event_management_app/services/participant_service.dart';
+import 'package:event_management_app/services/question_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +24,9 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
   bool _refresh = false;
   ParticipantService participantService = new ParticipantService();
   TextEditingController _questionTextController = TextEditingController();
+  QuestionService questionService = new QuestionService();
+  final _formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
@@ -32,6 +37,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 10,
         title: Text("Meetup Detail"),
@@ -241,6 +247,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             content: TextFormField(
+              key: _formKey,
               controller: _questionTextController,
               maxLines: 4,
               maxLength: 240,
@@ -259,13 +266,55 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
             ),
             actions: <Widget>[
               new FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: new Text(
                     "Cancel",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   )),
               new FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_questionTextController.text.length > 0) {
+                      Question newQuestion = Question(
+                          askedQuestion: _questionTextController.text,
+                          isAnswered: 0);
+                      questionService
+                          .saveNewQuestion(newQuestion, widget.meetupID)
+                          .then((response) {
+                        if (response.statusCode < 400) {
+                          Navigator.pop(context);
+                          final snackBar = SnackBar(
+                              content: Text(
+                            'Your question is sent!',
+                            style: TextStyle(fontSize: 20),
+                          ));
+                          _scaffoldKey.currentState.showSnackBar(snackBar);
+                        } else {
+                          final snackBar = SnackBar(
+                              content: Text(
+                            'Your question could not asked',
+                            style: TextStyle(fontSize: 20),
+                          ));
+                          _scaffoldKey.currentState.showSnackBar(snackBar);
+                        }
+                      }).catchError((onError) {
+                        final snackBar = SnackBar(
+                            content: Text(
+                          'Something went wrong!',
+                          style: TextStyle(fontSize: 20),
+                        ));
+                        _scaffoldKey.currentState.showSnackBar(snackBar);
+                      });
+                    } else {
+                      final snackBar = SnackBar(
+                          content: Text(
+                        'Error!',
+                        style: TextStyle(fontSize: 20),
+                      ));
+                      _scaffoldKey.currentState.showSnackBar(snackBar);
+                    }
+                  },
                   child: new Text(
                     "Ask",
                     style: TextStyle(
