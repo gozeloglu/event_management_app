@@ -9,12 +9,17 @@ import '../map_page.dart';
 
 class ParticipantMeetupDetail extends StatefulWidget {
   const ParticipantMeetupDetail(
-      {Key key, this.meetupID, this.username, this.isRegisterPage})
+      {Key key,
+      this.meetupID,
+      this.username,
+      this.isRegisterPage,
+      this.startDate})
       : super(key: key);
 
   final String meetupID;
   final String username;
   final bool isRegisterPage;
+  final String startDate;
 
   @override
   ParticipantMeetupDetailState createState() => ParticipantMeetupDetailState();
@@ -27,6 +32,15 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
   QuestionService questionService = new QuestionService();
   final _formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool _canAskQuestion = false;
+
+  @override
+  void initState() {
+    if (_isMeetupToday(widget.startDate.split("-"))) {
+      _canAskQuestion = true;
+    }
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -61,7 +75,16 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
           IconButton(
             icon: Icon(Icons.question_answer),
             onPressed: () {
-              _displayQuestionDialog(context);
+              if (_canAskQuestion) {
+                _displayQuestionDialog(context);
+              } else {
+                final snackBar = SnackBar(
+                    content: Text(
+                  'Meetup is not started. You cannot ask your question!',
+                  style: TextStyle(fontSize: 20),
+                ));
+                _scaffoldKey.currentState.showSnackBar(snackBar);
+              }
             },
           ),
         ],
@@ -325,5 +348,29 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
             ],
           );
         });
+  }
+
+  bool _isMeetupToday(List<String> meetupDate) {
+    int meetupYear = int.parse(meetupDate[0]);
+    int meeupMonth = int.parse(meetupDate[1]);
+    int meetupDay = int.parse(meetupDate[2]);
+
+    int todayDay = DateTime.now().toLocal().day.toInt();
+    int todayMonth = DateTime.now().toLocal().month.toInt();
+    int todayYear = DateTime.now().toLocal().year.toInt();
+
+    if (meetupDay == todayDay) {
+      if (meeupMonth == todayMonth) {
+        if (meetupYear == todayYear) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }

@@ -134,10 +134,12 @@ class HomeState extends State<HomePage> {
             if (snapshot.hasData) {
               List<String> meetupName = List();
               List<String> meetupDetails = List();
+              List<String> meetupDates = List();
 
               for (int i = 0; i < snapshot.data.length; i++) {
                 meetupName.add(snapshot.data[i]["meetupName"]);
                 meetupDetails.add(snapshot.data[i]["details"]);
+                meetupDates.add(snapshot.data[i]["startDate"]);
               }
 
               return ListView.builder(
@@ -160,10 +162,12 @@ class HomeState extends State<HomePage> {
                               new MaterialPageRoute(
                                   builder: (context) =>
                                       new ParticipantMeetupDetail(
-                                          meetupID: snapshot.data[index]
-                                              ["meetupID"],
-                                          username: widget.username,
-                                          isRegisterPage: true)));
+                                        meetupID: snapshot.data[index]
+                                            ["meetupID"],
+                                        username: widget.username,
+                                        isRegisterPage: true,
+                                        startDate: meetupDates[index],
+                                      )));
                         },
                       ),
                     );
