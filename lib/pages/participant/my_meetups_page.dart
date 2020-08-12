@@ -35,10 +35,12 @@ class MyMeetupState extends State<MyMeetups> {
             if (snapshot.hasData) {
               List<String> meetupNameList = List();
               List<String> meetupDetailList = List();
+              List<String> startDates = List();
 
               for (int i = 0; i < snapshot.data.length; i++) {
                 meetupNameList.add(snapshot.data[i]["meetupName"]);
                 meetupDetailList.add(snapshot.data[i]["details"]);
+                startDates.add(snapshot.data[i]["startDate"]);
               }
               return ListView.builder(
                   itemCount: snapshot.data.length,
@@ -56,7 +58,9 @@ class MyMeetupState extends State<MyMeetups> {
                         onTap: () {
                           // TODO Details page
                           _handleRebuildState(
-                              context, snapshot.data[index]["meetupID"]);
+                              context,
+                              snapshot.data[index]["meetupID"],
+                              startDates[index]);
                         },
                       ),
                     );
@@ -86,14 +90,17 @@ class MyMeetupState extends State<MyMeetups> {
     );
   }
 
-  void _handleRebuildState(BuildContext context, String meetupID) async {
+  void _handleRebuildState(
+      BuildContext context, String meetupID, String _startDate) async {
     final result = await Navigator.push(
         context,
         new MaterialPageRoute(
             builder: (context) => new ParticipantMeetupDetail(
-                meetupID: meetupID,
-                username: widget.username,
-                isRegisterPage: false)));
+                  meetupID: meetupID,
+                  username: widget.username,
+                  isRegisterPage: false,
+                  startDate: _startDate,
+                )));
     if (result[0]) {
       setState(() {});
       Scaffold.of(context).showSnackBar(
