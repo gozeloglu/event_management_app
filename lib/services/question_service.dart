@@ -37,4 +37,19 @@ class QuestionService {
       throw new Exception("Failed to get questions");
     }
   }
+
+  Future<http.Response> deleteQuestion(int questionID) async {
+    http.Response response = await http.delete(
+        "http://10.0.2.2:8080/question/delete-question/" +
+            questionID.toString(),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+
+    if (response.statusCode < 400) {
+      return response;
+    } else {
+      return response;
+    }
+  }
 }

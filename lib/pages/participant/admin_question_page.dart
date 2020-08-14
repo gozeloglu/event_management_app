@@ -12,10 +12,12 @@ class QuestionListPage extends StatefulWidget {
 
 class QuestionListPageState extends State<QuestionListPage> {
   QuestionService questionService = new QuestionService();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
           elevation: 10,
           title: Text("Questions"),
@@ -43,9 +45,11 @@ class QuestionListPageState extends State<QuestionListPage> {
                 );
               }
               List<String> questionList = List();
+              List<int> questionIDList = List();
 
               for (int i = 0; i < snapshot.data.length; i++) {
                 questionList.add(snapshot.data[i]["askedQuestion"]);
+                questionIDList.add(snapshot.data[i]["id"]);
               }
 
               return ListView.builder(
@@ -59,7 +63,10 @@ class QuestionListPageState extends State<QuestionListPage> {
                       child: ListTile(
                         trailing: IconButton(
                           icon: Icon(Icons.delete),
-                          onPressed: () {},
+                          onPressed: () {
+                            _displayQuestionDialog(
+                                context, questionIDList[index]);
+                          },
                         ),
                         leading: Icon(Icons.comment),
                         subtitle: Text(
@@ -67,7 +74,6 @@ class QuestionListPageState extends State<QuestionListPage> {
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                        onTap: () {},
                       ),
                     );
                   });
@@ -101,5 +107,65 @@ class QuestionListPageState extends State<QuestionListPage> {
         ),
       ),
     );
+  }
+
+  _displayQuestionDialog(BuildContext context, int questionID) async {
+    print(questionID);
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              "Are you sure?",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: Text("Do you want to delete the question?"),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: new Text(
+                    "Cancel",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  )),
+              new FlatButton(
+                  onPressed: () {
+                    questionService.deleteQuestion(questionID).then((response) {
+                      if (response.statusCode < 400) {
+                        final snackBar = SnackBar(
+                          content: Text("Question is deleted",
+                              style: TextStyle(fontSize: 20)),
+                        );
+                        _scaffoldKey.currentState.showSnackBar(snackBar);
+                        Navigator.pop(context);
+                      } else {
+                        final snackBar = SnackBar(
+                          content: Text("Question could not deleted!",
+                              style: TextStyle(fontSize: 20)),
+                        );
+                        _scaffoldKey.currentState.showSnackBar(snackBar);
+                      }
+                    }).catchError((onError) {
+                      final snackBar = SnackBar(
+                        content: Text("Something went wrong!",
+                            style: TextStyle(fontSize: 20)),
+                      );
+                      _scaffoldKey.currentState.showSnackBar(snackBar);
+                    });
+                  },
+                  child: new Text(
+                    "Delete",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green),
+                  ))
+            ],
+          );
+        }).then((_) => setState(() {}));
   }
 }
