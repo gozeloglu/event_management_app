@@ -1,5 +1,6 @@
 import 'package:event_management_app/models/meetup.dart';
 import 'package:event_management_app/pages/map_page.dart';
+import 'package:event_management_app/pages/participant/admin_question_page.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,12 +72,24 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
           ),
         ],
       ),
-      floatingActionButton: widget.canAnswer ? FloatingActionButton(
-        child: Icon(Icons.question_answer),
-        onPressed: () {
-
-        },
-      ) : null,
+      floatingActionButton: widget.canAnswer
+          ? FloatingActionButton(
+              backgroundColor: Colors.red[800],
+              elevation: 10,
+              child: Icon(
+                Icons.question_answer,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => QuestionListPage(
+                              meetupID: widget.meetupId,
+                            )));
+              },
+            )
+          : null,
       body: Center(
         child: FutureBuilder<Meetup>(
           future: adminService.getMeetup(widget.meetupId),

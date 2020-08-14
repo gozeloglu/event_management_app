@@ -239,8 +239,8 @@ class AdminHomeState extends State<AdminHomePage> {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new AdminMeetupDetail(meetupID,
-                _isMeetupToday(startDate) ? true : false)));
+            builder: (context) => new AdminMeetupDetail(
+                meetupID, _isMeetupToday(startDate) ? true : false)));
 
     if (result == null || result == false) {
       setState(() {});
@@ -255,6 +255,11 @@ class AdminHomeState extends State<AdminHomePage> {
     }
   }
 
+  /// This method controls the meetup date
+  /// It controls the day, month, and year
+  /// @param meetupDate consists of day, month, and year in string type
+  /// @return true if meetup is today
+  ///         false if meetup is not today
   bool _isMeetupToday(List<String> meetupDate) {
     int meetupYear = int.parse(meetupDate[0]);
     int meeupMonth = int.parse(meetupDate[1]);
