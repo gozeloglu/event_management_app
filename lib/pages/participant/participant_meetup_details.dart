@@ -10,18 +10,24 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../map_page.dart';
 
 class ParticipantMeetupDetail extends StatefulWidget {
-  const ParticipantMeetupDetail(
-      {Key key,
-      this.meetupID,
-      this.username,
-      this.isRegisterPage,
-      this.startDate})
-      : super(key: key);
+  const ParticipantMeetupDetail({
+    Key key,
+    this.meetupID,
+    this.username,
+    this.isRegisterPage,
+    this.startDate,
+    this.isQRCodeVisible,
+    this.firstName,
+    this.lastName,
+  }) : super(key: key);
 
   final String meetupID;
   final String username;
   final bool isRegisterPage;
   final String startDate;
+  final bool isQRCodeVisible;
+  final String firstName;
+  final String lastName;
 
   @override
   ParticipantMeetupDetailState createState() => ParticipantMeetupDetailState();
@@ -95,28 +101,34 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green[800],
-        elevation: 10,
-        child: Icon(
-          Icons.camera,
-          size: 30,
-        ),
-        onPressed: () {
-          Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => QRCode(
-                      meetupName: _meetupName,
-                      registeredUserCount: _registeredUserCount,
-                      quota: _quota)));
-        },
-      ),
+      floatingActionButton: widget.isQRCodeVisible
+          ? FloatingActionButton(
+              backgroundColor: Colors.green[800],
+              elevation: 10,
+              child: Icon(
+                Icons.camera,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => QRCode(
+                              meetupName: _meetupName,
+                              registeredUserCount: _registeredUserCount,
+                              quota: _quota,
+                              participantLastName: widget.lastName,
+                              participantName: widget.firstName,
+                            )));
+              },
+            )
+          : null,
       body: Center(
         child: FutureBuilder<Meetup>(
           future: participantService.getMeetupDetails(widget.meetupID),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              _meetupName = snapshot.data.meetupName;
               return Container(
                 padding: const EdgeInsets.all(16),
                 child: SingleChildScrollView(

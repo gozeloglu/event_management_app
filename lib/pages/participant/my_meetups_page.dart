@@ -1,12 +1,15 @@
-import 'file:///C:/Users/gozel/OneDrive/Desktop/event_management_app/event_management_app/lib/pages/participant/participant_meetup_details.dart';
+import 'package:event_management_app/pages/participant/participant_meetup_details.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyMeetups extends StatefulWidget {
-  MyMeetups({Key key, this.username}) : super(key: key);
+  MyMeetups({Key key, this.username, this.firstName, this.lastName})
+      : super(key: key);
 
   final String username;
+  final String firstName;
+  final String lastName;
 
   MyMeetupState createState() => MyMeetupState();
 }
@@ -100,6 +103,9 @@ class MyMeetupState extends State<MyMeetups> {
                   username: widget.username,
                   isRegisterPage: false,
                   startDate: _startDate,
+                  isQRCodeVisible: true,
+                  firstName: widget.firstName,
+                  lastName: widget.lastName,
                 )));
     if (result[0]) {
       setState(() {});

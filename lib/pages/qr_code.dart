@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCode extends StatefulWidget {
-  QRCode({Key key, this.meetupName, this.registeredUserCount, this.quota})
+  QRCode(
+      {Key key,
+      this.meetupName,
+      this.registeredUserCount,
+      this.quota,
+      this.participantName,
+      this.participantLastName})
       : super(key: key);
 
   final String meetupName;
   final int registeredUserCount;
   final int quota;
+  final String participantName;
+  final String participantLastName;
 
   @override
   QRCodeState createState() => QRCodeState();
@@ -32,12 +40,15 @@ class QRCodeState extends State<QRCode> {
       body: Center(
         child: Container(
           child: QrImage(
-            data: widget.meetupName +
+            data: "First Name: " +
+                widget.participantName +
                 "\n" +
-                "Participant Status: " +
-                widget.registeredUserCount.toString() +
-                "/" +
-                widget.quota.toString(),
+                "Last Name:" +
+                widget.participantLastName +
+                "\n" +
+                "Meetup Name: " +
+                widget.meetupName +
+                "\n",
             version: QrVersions.auto,
             size: 320,
             gapless: false,

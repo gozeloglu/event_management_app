@@ -9,8 +9,11 @@ import '../../routes.dart';
 import 'my_meetups_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.username}) : super(key: key);
+  HomePage({Key key, this.username, this.firstName, this.lastName})
+      : super(key: key);
   final String username;
+  final String firstName;
+  final String lastName;
 
   @override
   HomeState createState() => HomeState();
@@ -29,6 +32,8 @@ class HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.firstName);
+    print(widget.lastName);
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
@@ -85,6 +90,8 @@ class HomeState extends State<HomePage> {
                       new MaterialPageRoute(
                           builder: (context) => new MyMeetups(
                                 username: widget.username,
+                            firstName: widget.firstName,
+                            lastName: widget.lastName,
                               )));
                 }
               },
@@ -132,48 +139,62 @@ class HomeState extends State<HomePage> {
           future: participantService.getAllMeetups(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<String> meetupName = List();
-              List<String> meetupDetails = List();
-              List<String> meetupDates = List();
+              if (snapshot.data.length == 0) {
+                Center(
+                  child: Text(
+                    "There is no meetup!",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                );
+              } else {
+                List<String> meetupName = List();
+                List<String> meetupDetails = List();
+                List<String> meetupDates = List();
 
-              for (int i = 0; i < snapshot.data.length; i++) {
-                meetupName.add(snapshot.data[i]["meetupName"]);
-                meetupDetails.add(snapshot.data[i]["details"]);
-                meetupDates.add(snapshot.data[i]["startDate"]);
+                for (int i = 0; i < snapshot.data.length; i++) {
+                  meetupName.add(snapshot.data[i]["meetupName"]);
+                  meetupDetails.add(snapshot.data[i]["details"]);
+                  meetupDates.add(snapshot.data[i]["startDate"]);
+                }
+
+                return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(15)),
+                        elevation: 5,
+                        margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                        child: ListTile(
+                          trailing: Icon(Icons.arrow_right),
+                          leading: Icon(Icons.event),
+                          title: Text(meetupName[index]),
+                          subtitle: Text(meetupDetails[index], maxLines: 1),
+                          onTap: () {
+                            // TODO Details page
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) =>
+                                        new ParticipantMeetupDetail(
+                                          meetupID: snapshot.data[index]
+                                              ["meetupID"],
+                                          username: widget.username,
+                                          isRegisterPage: true,
+                                          startDate: meetupDates[index],
+                                          isQRCodeVisible: false,
+                                        )));
+                          },
+                        ),
+                      );
+                    });
               }
-
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(15)),
-                      elevation: 5,
-                      margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                      child: ListTile(
-                        trailing: Icon(Icons.arrow_right),
-                        leading: Icon(Icons.event),
-                        title: Text(meetupName[index]),
-                        subtitle: Text(meetupDetails[index], maxLines: 1),
-                        onTap: () {
-                          // TODO Details page
-                          Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) =>
-                                      new ParticipantMeetupDetail(
-                                        meetupID: snapshot.data[index]
-                                            ["meetupID"],
-                                        username: widget.username,
-                                        isRegisterPage: true,
-                                        startDate: meetupDates[index],
-                                      )));
-                        },
-                      ),
-                    );
-                  });
             } else if (snapshot.data == null) {
               noDataMessage();
+              // TODO Registered user count
+              // TODO MeetupID otomatik oluşturulabilir
             }
             return Container(
               alignment: Alignment.center,

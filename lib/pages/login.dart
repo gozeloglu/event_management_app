@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:event_management_app/pages/participant/home_page.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -92,10 +94,9 @@ class LoginState extends State<Login> {
             return null;
           },
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: "Username",
-            prefixIcon: Icon(Icons.person)
-          ),
+              border: OutlineInputBorder(),
+              labelText: "Username",
+              prefixIcon: Icon(Icons.person)),
         ));
   }
 
@@ -113,19 +114,18 @@ class LoginState extends State<Login> {
             return null;
           },
           decoration: InputDecoration(
-            suffixIcon: IconButton(
-                icon: Icon(
-                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _passwordVisible = !_passwordVisible;
-                  });
-                }),
-            border: OutlineInputBorder(),
-            labelText: "Password",
-            prefixIcon: Icon(Icons.lock)
-          ),
+              suffixIcon: IconButton(
+                  icon: Icon(
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  }),
+              border: OutlineInputBorder(),
+              labelText: "Password",
+              prefixIcon: Icon(Icons.lock)),
         ));
   }
 
@@ -149,12 +149,24 @@ class LoginState extends State<Login> {
                 .loginParticipant(username, password)
                 .then((response) {
               if (response.statusCode < 400) {
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('Successful Login')));
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) => HomePage(username: username)),
-                    (Route<dynamic> route) => false);
+                String firstName = "";
+                String lastName = "";
+                participantService.getParticipantDetails(username).then((res) {
+                  firstName = res.firstName;
+                  lastName = res.lastName;
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text('Successful Login')));
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => HomePage(
+                                username: username,
+                                firstName:
+                                    Utf8Decoder().convert(firstName.codeUnits),
+                                lastName:
+                                    Utf8Decoder().convert(lastName.codeUnits),
+                              )),
+                      (Route<dynamic> route) => false);
+                });
               } else {
                 Scaffold.of(context).showSnackBar(
                     SnackBar(content: Text('Login is not successful!')));
