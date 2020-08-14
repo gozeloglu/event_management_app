@@ -1,11 +1,12 @@
 import 'package:event_management_app/models/meetup.dart';
+import 'package:event_management_app/pages/admin/admin_question_page.dart';
 import 'package:event_management_app/pages/map_page.dart';
-import 'package:event_management_app/pages/participant/admin_question_page.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../admin_participant_list_page.dart';
+
 import 'meetup_update.dart';
 
 class AdminMeetupDetail extends StatefulWidget {

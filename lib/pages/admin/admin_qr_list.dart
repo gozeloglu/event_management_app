@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'admin_meetup_detail.dart';
-import 'admin_qr_code.dart';
+import '../qr_code.dart';
 
 class QRCodeList extends StatefulWidget {
   QRCodeList({Key key}) : super(key: key);

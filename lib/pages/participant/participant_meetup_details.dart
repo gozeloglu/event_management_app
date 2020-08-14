@@ -1,9 +1,11 @@
 import 'package:event_management_app/models/meetup.dart';
 import 'package:event_management_app/models/question.dart';
+import 'package:event_management_app/pages/qr_code.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:event_management_app/services/question_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../map_page.dart';
 
@@ -33,6 +35,10 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
   final _formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool _canAskQuestion = false;
+
+  String _meetupName = "";
+  int _registeredUserCount = 0;
+  int _quota = 0;
 
   @override
   void initState() {
@@ -88,6 +94,23 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
             },
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green[800],
+        elevation: 10,
+        child: Icon(
+          Icons.camera,
+          size: 30,
+        ),
+        onPressed: () {
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => QRCode(
+                      meetupName: _meetupName,
+                      registeredUserCount: _registeredUserCount,
+                      quota: _quota)));
+        },
       ),
       body: Center(
         child: FutureBuilder<Meetup>(
