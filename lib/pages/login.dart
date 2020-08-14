@@ -154,8 +154,11 @@ class LoginState extends State<Login> {
                 participantService.getParticipantDetails(username).then((res) {
                   firstName = res.firstName;
                   lastName = res.lastName;
-                  Scaffold.of(context).showSnackBar(
-                      SnackBar(content: Text('Successful Login')));
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                    'Successful Login',
+                    style: TextStyle(fontSize: 20),
+                  )));
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                           builder: (context) => HomePage(
@@ -168,17 +171,26 @@ class LoginState extends State<Login> {
                       (Route<dynamic> route) => false);
                 });
               } else {
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Login is not successful!')));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  'Login is not successful!',
+                  style: TextStyle(fontSize: 20),
+                )));
               }
             }).catchError((onError) {
-              Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Something went wrong!')));
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                'Something went wrong!',
+                style: TextStyle(fontSize: 20),
+              )));
             });
           } else {
             // If fields are empty
-            // TODO Show up appropriate error message if not valid user
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error')));
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text(
+              'Error',
+              style: TextStyle(fontSize: 20),
+            )));
           }
         },
       ),

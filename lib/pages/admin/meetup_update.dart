@@ -45,7 +45,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
   TextEditingController _startDateController;
   TextEditingController _endDateController;
   TextEditingController _quotaController;
-  TextEditingController _registeredUserCountController;
+  // TextEditingController _registeredUserCountController;
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
     _startDateController = new TextEditingController(text: widget.startDate);
     _endDateController = new TextEditingController(text: widget.endDate);
     _quotaController = new TextEditingController(text: widget.quota.toString());
-    _registeredUserCountController =
+    // _registeredUserCountController =
         new TextEditingController(text: widget.registeredUserCount.toString());
     super.initState();
   }
@@ -74,7 +74,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
     _startDateController.dispose();
     _endDateController.dispose();
     _quotaController.dispose();
-    _registeredUserCountController.dispose();
     super.dispose();
   }
 
@@ -110,7 +109,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
                           startDateWidget(),
                           endDateWidget(),
                           quotaWidget(),
-                          registeredUserCountWidget(),
+                          //registeredUserCountWidget(),
                           updateButtonWidget(context),
                         ],
                       ),
@@ -374,7 +373,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
           }
           int quota = int.parse(value);
           int registeredUserCount =
-              int.parse(_registeredUserCountController.text);
+              widget.registeredUserCount;
           if (quota < 1) {
             return "Quota must be bigger than 0";
           } else if (quota < registeredUserCount) {
@@ -391,7 +390,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
     );
   }
 
-  Widget registeredUserCountWidget() {
+ /* Widget registeredUserCountWidget() {
     return Container(
       padding: const EdgeInsets.all(15),
       child: TextFormField(
@@ -417,7 +416,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
             prefixIcon: Icon(Icons.person)),
       ),
     );
-  }
+  }*/
 
   Widget updateButtonWidget(BuildContext context) {
     return Container(
@@ -436,9 +435,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
           if (_formKey.currentState.validate()) {
             // Save the meetup
             int _quota = int.parse(_quotaController.text);
-            int _registredUserCount =
-                int.parse(_registeredUserCountController.text);
-
             String startDateWithT = _startDateController.text.substring(0, 10);
 
             String endDateWithT = _endDateController.text.substring(0, 10);
@@ -453,7 +449,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
               startDate: startDateWithT,
               endDate: endDateWithT,
               quota: _quota,
-              registeredCount: _registredUserCount,
+              registeredCount: 0,
             );
             adminService.updateMeetup(widget.meetupID, meetup).then((response) {
               if (response.statusCode < 400) {
