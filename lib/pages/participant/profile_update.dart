@@ -34,7 +34,6 @@ class ProfileUpdateState extends State<ProfileUpdate> {
   TextEditingController _usernameController;
   TextEditingController _emailController;
   TextEditingController _ageController;
-  TextEditingController _identityNumberController;
 
   @override
   void initState() {
@@ -43,8 +42,6 @@ class ProfileUpdateState extends State<ProfileUpdate> {
     _usernameController = new TextEditingController(text: widget.username);
     _emailController = new TextEditingController(text: widget.email);
     _ageController = new TextEditingController(text: widget.age.toString());
-    _identityNumberController =
-        new TextEditingController(text: widget.identityNumber);
     super.initState();
   }
 
@@ -55,7 +52,6 @@ class ProfileUpdateState extends State<ProfileUpdate> {
     _usernameController.dispose();
     _emailController.dispose();
     _ageController.dispose();
-    _identityNumberController.dispose();
     super.dispose();
   }
 
@@ -87,7 +83,6 @@ class ProfileUpdateState extends State<ProfileUpdate> {
                   usernameWidget(),
                   emailWidget(),
                   ageWidget(),
-                  identityNumberWidget(),
                   updateButtonWidget(context),
                 ],
               ),
@@ -210,30 +205,6 @@ class ProfileUpdateState extends State<ProfileUpdate> {
     );
   }
 
-  Widget identityNumberWidget() {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      child: TextFormField(
-        controller: _identityNumberController,
-        maxLines: 1,
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Please enter your age";
-          } else if (value.length != 11) {
-            return "Identity number should contains 11 characters!";
-          } else {
-            return null;
-          }
-        },
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Identity Number",
-          prefixIcon: Icon(Icons.confirmation_number),
-        ),
-      ),
-    );
-  }
-
   Widget updateButtonWidget(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
@@ -259,7 +230,7 @@ class ProfileUpdateState extends State<ProfileUpdate> {
               email: _emailController.text,
               userName: _usernameController.text,
               age: int.parse(_ageController.text),
-              identityNumber: _identityNumberController.text,
+              identityNumber: widget.identityNumber,
             );
             participantService.updateProfile(updatedProfile).then((response) {
               if (response.statusCode < 400) {

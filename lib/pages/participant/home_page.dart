@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:event_management_app/components/tab_bar.dart';
 import 'package:event_management_app/pages/participant/participant_meetup_details.dart';
 import 'package:event_management_app/pages/participant/profile.dart';
@@ -32,8 +34,6 @@ class HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.firstName);
-    print(widget.lastName);
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
@@ -52,7 +52,7 @@ class HomeState extends State<HomePage> {
                   color: Colors.purple,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                   gradient: new LinearGradient(
-                    colors: [Colors.red, Colors.cyan],
+                    colors: [Colors.red, Colors.cyan, Colors.yellow],
                   )),
             ),
             ListTile(
@@ -90,8 +90,8 @@ class HomeState extends State<HomePage> {
                       new MaterialPageRoute(
                           builder: (context) => new MyMeetups(
                                 username: widget.username,
-                            firstName: widget.firstName,
-                            lastName: widget.lastName,
+                                firstName: widget.firstName,
+                                lastName: widget.lastName,
                               )));
                 }
               },
@@ -170,8 +170,12 @@ class HomeState extends State<HomePage> {
                         child: ListTile(
                           trailing: Icon(Icons.arrow_right),
                           leading: Icon(Icons.event),
-                          title: Text(meetupName[index]),
-                          subtitle: Text(meetupDetails[index], maxLines: 1),
+                          title: Text(Utf8Decoder()
+                              .convert(meetupName[index].codeUnits)),
+                          subtitle: Text(
+                              Utf8Decoder()
+                                  .convert(meetupDetails[index].codeUnits),
+                              maxLines: 1),
                           onTap: () {
                             // TODO Details page
                             Navigator.push(
