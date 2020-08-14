@@ -95,9 +95,9 @@ class AdminLoginState extends State<AdminLogin> {
             return null;
           },
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: "Username",
-          ),
+              border: OutlineInputBorder(),
+              labelText: "Username",
+              prefixIcon: Icon(Icons.person)),
         ));
   }
 
@@ -115,18 +115,18 @@ class AdminLoginState extends State<AdminLogin> {
             return null;
           },
           decoration: InputDecoration(
-            suffixIcon: IconButton(
-                icon: Icon(
-                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _passwordVisible = !_passwordVisible;
-                  });
-                }),
-            border: OutlineInputBorder(),
-            labelText: "Password",
-          ),
+              suffixIcon: IconButton(
+                  icon: Icon(
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  }),
+              border: OutlineInputBorder(),
+              labelText: "Password",
+              prefixIcon: Icon(Icons.lock)),
         ));
   }
 

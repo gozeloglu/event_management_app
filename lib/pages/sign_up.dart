@@ -96,6 +96,7 @@ class _SignUpState extends State<SignUp> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "First Name",
+          prefixIcon: Icon(Icons.person_outline)
         ),
       ),
     );
@@ -116,6 +117,7 @@ class _SignUpState extends State<SignUp> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "Last Name",
+          prefixIcon: Icon(Icons.person_outline)
         ),
       ),
     );
@@ -136,6 +138,7 @@ class _SignUpState extends State<SignUp> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "E-Mail",
+          prefixIcon: Icon(Icons.email)
         ),
       ),
     );
@@ -156,6 +159,7 @@ class _SignUpState extends State<SignUp> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "Username",
+          prefixIcon: Icon(Icons.person)
         ),
       ),
     );
@@ -186,6 +190,7 @@ class _SignUpState extends State<SignUp> {
               }),
           border: OutlineInputBorder(),
           labelText: "Password",
+          prefixIcon: Icon(Icons.lock)
         ),
       ),
     );
@@ -207,6 +212,7 @@ class _SignUpState extends State<SignUp> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "Age",
+          prefixIcon: Icon(Icons.date_range)
         ),
       ),
     );
@@ -227,6 +233,7 @@ class _SignUpState extends State<SignUp> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "Identity Number",
+          prefixIcon: Icon(Icons.perm_identity)
         ),
       ),
     );

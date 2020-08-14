@@ -94,6 +94,7 @@ class LoginState extends State<Login> {
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: "Username",
+            prefixIcon: Icon(Icons.person)
           ),
         ));
   }
@@ -123,6 +124,7 @@ class LoginState extends State<Login> {
                 }),
             border: OutlineInputBorder(),
             labelText: "Password",
+            prefixIcon: Icon(Icons.lock)
           ),
         ));
   }
