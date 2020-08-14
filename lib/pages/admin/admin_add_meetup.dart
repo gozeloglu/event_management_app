@@ -13,6 +13,11 @@ class AdminAddMeetup extends StatefulWidget {
 class AdminAddMeetupState extends State<AdminAddMeetup> {
   final _formKey = GlobalKey<FormState>();
 
+  DateTime startDate = DateTime.now().toLocal();
+  DateTime endDate = DateTime.now();
+  bool isStartDateSet = false;
+  bool isEndDateSet = false;
+
   TextEditingController _meetupIdController = new TextEditingController();
   TextEditingController _meetupNameController = new TextEditingController();
   TextEditingController _detailsController = new TextEditingController();
@@ -95,9 +100,9 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Meetup ID",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Meetup ID",
+            prefixIcon: Icon(Icons.confirmation_number)),
       ),
     );
   }
@@ -116,9 +121,9 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Meetup Name",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Meetup Name",
+            prefixIcon: Icon(Icons.event)),
       ),
     );
   }
@@ -137,9 +142,9 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Details",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Details",
+            prefixIcon: Icon(Icons.details)),
       ),
     );
   }
@@ -158,9 +163,9 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Address",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Address",
+            prefixIcon: Icon(Icons.home)),
       ),
     );
   }
@@ -179,37 +184,114 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Place Name",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Place Name",
+            prefixIcon: Icon(Icons.place)),
       ),
     );
   }
 
   Widget startDateWidget() {
     return Container(
-      padding: const EdgeInsets.all(15),
-      child: TextFormField(
-        controller: _startDateController,
-        maxLines: 1,
-        keyboardType: TextInputType.datetime,
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Start Date field should be filled";
-          } else {
-            return null;
-          }
-        },
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Start Date",
-        ),
-      ),
-    );
+        padding: const EdgeInsets.all(15),
+        child: RaisedButton(
+            padding: const EdgeInsets.all(15),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            elevation: 10,
+            onPressed: () {
+              final date =
+                  _selectStartDate(context).then((_) => setState(() {}));
+              setState(() {});
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 30.0,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.date_range,
+                                size: 18.0,
+                                color: Colors.teal,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                !isStartDateSet
+                                    ? "Set Start Date"
+                                    : startDate.toString().split(" ")[0],
+                                style: TextStyle(
+                                    color: Colors.teal,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ]),
+            )));
   }
 
   Widget endDateWidget() {
     return Container(
+        padding: const EdgeInsets.all(15),
+        child: RaisedButton(
+            padding: const EdgeInsets.all(15),
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            elevation: 10,
+            onPressed: () {
+              _selectEndDate(context).then((_) => setState(() {}));
+              setState(() {});
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 30.0,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.date_range,
+                                size: 18.0,
+                                color: Colors.teal,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                !isEndDateSet
+                                    ? "Set End Date"
+                                    : endDate.toString().split(" ")[0],
+                                style: TextStyle(
+                                    color: Colors.teal,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ]),
+            )));
+
+    /**return Container(
       padding: const EdgeInsets.all(15),
       child: TextFormField(
         controller: _endDateController,
@@ -223,11 +305,11 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "End Date",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "End Date",
+            prefixIcon: Icon(Icons.calendar_today)),
       ),
-    );
+    );**/
   }
 
   Widget quotaWidget() {
@@ -249,9 +331,9 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Quota",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Quota",
+            prefixIcon: Icon(Icons.people)),
       ),
     );
   }
@@ -277,9 +359,9 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
           }
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Registered User Count",
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Registered User Count",
+            prefixIcon: Icon(Icons.person)),
       ),
     );
   }
@@ -290,6 +372,8 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
       child: RaisedButton(
         elevation: 8,
         color: Colors.green,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(20)),
         child: Text(
           "Add New Meetup",
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -339,5 +423,34 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
         },
       ),
     );
+  }
+
+  Future<DateTime> _selectStartDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: startDate,
+        firstDate: startDate,
+        lastDate: DateTime(2100));
+    if (picked != null && picked != startDate) {
+      setState(() {
+        isStartDateSet = true;
+        startDate = picked;
+      });
+    }
+    return picked;
+  }
+
+  Future<Null> _selectEndDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: startDate,
+        firstDate: startDate,
+        lastDate: DateTime(2100));
+    if (picked != null && picked != endDate) {
+      setState(() {
+        isEndDateSet = true;
+        endDate = picked;
+      });
+    }
   }
 }
