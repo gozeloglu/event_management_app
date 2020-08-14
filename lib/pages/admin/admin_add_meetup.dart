@@ -14,7 +14,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
   final _formKey = GlobalKey<FormState>();
 
   DateTime startDate = DateTime.now().toLocal();
-  DateTime endDate = DateTime.now();
+  DateTime endDate = DateTime.now().toLocal();
   bool isStartDateSet = false;
   bool isEndDateSet = false;
 
@@ -23,8 +23,9 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
   TextEditingController _detailsController = new TextEditingController();
   TextEditingController _addressController = new TextEditingController();
   TextEditingController _placeNameController = new TextEditingController();
-  TextEditingController _startDateController = new TextEditingController();
-  TextEditingController _endDateController = new TextEditingController();
+
+  //TextEditingController _startDateController = new TextEditingController();
+  // TextEditingController _endDateController = new TextEditingController();
   TextEditingController _quotaController = new TextEditingController();
   TextEditingController _registeredUserCountController =
       new TextEditingController();
@@ -36,8 +37,8 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
     _detailsController.dispose();
     _addressController.dispose();
     _placeNameController.dispose();
-    _startDateController.dispose();
-    _endDateController.dispose();
+    //  _startDateController.dispose();
+//    _endDateController.dispose();
     _quotaController.dispose();
     _registeredUserCountController.dispose();
     super.dispose();
@@ -248,7 +249,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
         child: RaisedButton(
             padding: const EdgeInsets.all(15),
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             elevation: 10,
             onPressed: () {
               _selectEndDate(context).then((_) => setState(() {}));
@@ -290,26 +291,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
                     )
                   ]),
             )));
-
-    /**return Container(
-      padding: const EdgeInsets.all(15),
-      child: TextFormField(
-        controller: _endDateController,
-        maxLines: 1,
-        keyboardType: TextInputType.datetime,
-        validator: (value) {
-          if (value.isEmpty) {
-            return "End Date field should be filled";
-          } else {
-            return null;
-          }
-        },
-        decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: "End Date",
-            prefixIcon: Icon(Icons.calendar_today)),
-      ),
-    );**/
   }
 
   Widget quotaWidget() {
@@ -387,11 +368,9 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
             int _registredUserCount =
                 int.parse(_registeredUserCountController.text);
 
-            String startDateWithT = _startDateController.text.substring(0, 10);
-            String endDateWithT = _endDateController.text.substring(0, 10);
+            String startDateWithT = startDate.toString().split(" ")[0];
+            String endDateWithT = endDate.toString().split(" ")[0];
 
-            DateTime startDate = DateTime.parse(_startDateController.text);
-            DateTime endDate = DateTime.parse(_endDateController.text);
             AdminService adminService = new AdminService();
             Meetup meetup = new Meetup(
               meetupID: _meetupIdController.text,
@@ -404,21 +383,47 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
               quota: _quota,
               registeredCount: _registredUserCount,
             );
-            adminService.addNewMeetup(meetup).then((response) {
-              if (response.statusCode < 400) {
-                Navigator.of(context).pop(true);
+            if (isStartDateSet && isEndDateSet) {
+              adminService.addNewMeetup(meetup).then((response) {
+                if (response.statusCode < 400) {
+                  Navigator.of(context).pop(true);
+                } else {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                    'Meetup could not saved',
+                    style: TextStyle(fontSize: 20),
+                  )));
+                }
+              }).catchError((onError) {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  'Something went wrong',
+                  style: TextStyle(fontSize: 20),
+                )));
+              });
+            } else {
+              if (!isStartDateSet) {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  'You should give start date',
+                  style: TextStyle(fontSize: 20),
+                )));
               } else {
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Meetup could not saved')));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  'You should give end date',
+                  style: TextStyle(fontSize: 20),
+                )));
               }
-            }).catchError((onError) {
-              Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Something went wrong')));
-            });
+            }
           } else {
             // If fields are empty
             // TODO Show up appropriate error message if not valid user
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error')));
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text(
+              'Error',
+              style: TextStyle(fontSize: 20),
+            )));
           }
         },
       ),
