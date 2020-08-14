@@ -2,7 +2,6 @@ import 'package:event_management_app/models/meetup.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class MeetupUpdate extends StatefulWidget {
   final String meetupID;
@@ -36,7 +35,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
   DateTime startDate;
   DateTime endDate;
 
-
   TextEditingController _meetupIdController;
   TextEditingController _meetupNameController;
   TextEditingController _detailsController;
@@ -45,6 +43,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
   TextEditingController _startDateController;
   TextEditingController _endDateController;
   TextEditingController _quotaController;
+
   // TextEditingController _registeredUserCountController;
 
   @override
@@ -59,8 +58,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
     _startDateController = new TextEditingController(text: widget.startDate);
     _endDateController = new TextEditingController(text: widget.endDate);
     _quotaController = new TextEditingController(text: widget.quota.toString());
-    // _registeredUserCountController =
-        new TextEditingController(text: widget.registeredUserCount.toString());
+    new TextEditingController(text: widget.registeredUserCount.toString());
     super.initState();
   }
 
@@ -109,7 +107,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
                           startDateWidget(),
                           endDateWidget(),
                           quotaWidget(),
-                          //registeredUserCountWidget(),
                           updateButtonWidget(context),
                         ],
                       ),
@@ -272,25 +269,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
                     )
                   ]),
             )));
-    /**return Container(
-        padding: const EdgeInsets.all(15),
-        child: TextFormField(
-        controller: _startDateController,
-        maxLines: 1,
-        keyboardType: TextInputType.datetime,
-        validator: (value) {
-        if (value.isEmpty) {
-        return "Start Date field should be filled";
-        } else {
-        return null;
-        }
-        },
-        decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: "Start Date",
-        prefixIcon: Icon(Icons.date_range)),
-        ),
-        );**/
   }
 
   Widget endDateWidget() {
@@ -339,25 +317,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
                     )
                   ]),
             )));
-    /**return Container(
-        padding: const EdgeInsets.all(15),
-        child: TextFormField(
-        controller: _endDateController,
-        maxLines: 1,
-        keyboardType: TextInputType.datetime,
-        validator: (value) {
-        if (value.isEmpty) {
-        return "End Date field should be filled";
-        } else {
-        return null;
-        }
-        },
-        decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: "End Date",
-        ),
-        ),
-        );**/
   }
 
   Widget quotaWidget() {
@@ -372,8 +331,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
             return "Quota field should be filled";
           }
           int quota = int.parse(value);
-          int registeredUserCount =
-              widget.registeredUserCount;
+          int registeredUserCount = widget.registeredUserCount;
           if (quota < 1) {
             return "Quota must be bigger than 0";
           } else if (quota < registeredUserCount) {
@@ -389,34 +347,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
       ),
     );
   }
-
- /* Widget registeredUserCountWidget() {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      child: TextFormField(
-        controller: _registeredUserCountController,
-        maxLines: 1,
-        keyboardType: TextInputType.number,
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Registered user count should be filled";
-          } else {
-            int count = int.parse(value);
-            int quota = int.parse(_quotaController.text);
-            if (count > quota) {
-              return "Registered user count cannot be bigger than quota";
-            } else {
-              return null;
-            }
-          }
-        },
-        decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: "Registered User Count",
-            prefixIcon: Icon(Icons.person)),
-      ),
-    );
-  }*/
 
   Widget updateButtonWidget(BuildContext context) {
     return Container(
@@ -449,7 +379,7 @@ class MeetupUpdateState extends State<MeetupUpdate> {
               startDate: startDateWithT,
               endDate: endDateWithT,
               quota: _quota,
-              registeredCount: 0,
+              registeredCount: widget.registeredUserCount,
             );
             adminService.updateMeetup(widget.meetupID, meetup).then((response) {
               if (response.statusCode < 400) {

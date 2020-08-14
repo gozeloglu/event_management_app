@@ -24,11 +24,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
   TextEditingController _addressController = new TextEditingController();
   TextEditingController _placeNameController = new TextEditingController();
 
-  //TextEditingController _startDateController = new TextEditingController();
-  // TextEditingController _endDateController = new TextEditingController();
   TextEditingController _quotaController = new TextEditingController();
-  TextEditingController _registeredUserCountController =
-      new TextEditingController();
 
   @override
   void dispose() {
@@ -37,10 +33,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
     _detailsController.dispose();
     _addressController.dispose();
     _placeNameController.dispose();
-    //  _startDateController.dispose();
-//    _endDateController.dispose();
     _quotaController.dispose();
-    _registeredUserCountController.dispose();
     super.dispose();
   }
 
@@ -75,7 +68,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
                 startDateWidget(),
                 endDateWidget(),
                 quotaWidget(),
-                registeredUserCountWidget(),
                 addButtonWidget(context),
               ],
             )),
@@ -319,34 +311,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
     );
   }
 
-  Widget registeredUserCountWidget() {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      child: TextFormField(
-        controller: _registeredUserCountController,
-        maxLines: 1,
-        keyboardType: TextInputType.number,
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Registered user count should be filled";
-          } else {
-            int count = int.parse(value);
-            int quota = int.parse(_quotaController.text);
-            if (count > quota) {
-              return "Registered user count cannot be bigger than quota";
-            } else {
-              return null;
-            }
-          }
-        },
-        decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: "Registered User Count",
-            prefixIcon: Icon(Icons.person)),
-      ),
-    );
-  }
-
   Widget addButtonWidget(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
@@ -365,8 +329,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
             // Save the meetup
 
             int _quota = int.parse(_quotaController.text);
-            int _registredUserCount =
-                int.parse(_registeredUserCountController.text);
 
             String startDateWithT = startDate.toString().split(" ")[0];
             String endDateWithT = endDate.toString().split(" ")[0];
@@ -381,7 +343,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
               startDate: startDateWithT,
               endDate: endDateWithT,
               quota: _quota,
-              registeredCount: _registredUserCount,
+              registeredCount: 0,
             );
             if (isStartDateSet && isEndDateSet) {
               adminService.addNewMeetup(meetup).then((response) {
