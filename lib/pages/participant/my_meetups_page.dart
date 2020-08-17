@@ -62,7 +62,7 @@ class MyMeetupState extends State<MyMeetups> {
                           // TODO Details page
                           _handleRebuildState(
                               context,
-                              snapshot.data[index]["meetupID"],
+                              snapshot.data[index]["id"],
                               startDates[index]);
                         },
                       ),
@@ -94,7 +94,7 @@ class MyMeetupState extends State<MyMeetups> {
   }
 
   void _handleRebuildState(
-      BuildContext context, String meetupID, String _startDate) async {
+      BuildContext context, int meetupID, String _startDate) async {
     final result = await Navigator.push(
         context,
         new MaterialPageRoute(

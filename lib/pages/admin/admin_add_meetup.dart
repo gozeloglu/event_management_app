@@ -18,7 +18,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
   bool isStartDateSet = false;
   bool isEndDateSet = false;
 
-  TextEditingController _meetupIdController = new TextEditingController();
   TextEditingController _meetupNameController = new TextEditingController();
   TextEditingController _detailsController = new TextEditingController();
   TextEditingController _addressController = new TextEditingController();
@@ -28,7 +27,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
 
   @override
   void dispose() {
-    _meetupIdController.dispose();
     _meetupNameController.dispose();
     _detailsController.dispose();
     _addressController.dispose();
@@ -60,7 +58,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
             child: SingleChildScrollView(
                 child: Column(
               children: <Widget>[
-                meetupIdWiget(),
                 meetupNameWidget(),
                 detailsWidget(),
                 addressWidget(),
@@ -77,7 +74,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
     );
   }
 
-  Widget meetupIdWiget() {
+ /* Widget meetupIdWiget() {
     return Container(
       padding: const EdgeInsets.all(15),
       child: TextFormField(
@@ -98,7 +95,7 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
             prefixIcon: Icon(Icons.confirmation_number)),
       ),
     );
-  }
+  }*/
 
   Widget meetupNameWidget() {
     return Container(
@@ -335,7 +332,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
 
             AdminService adminService = new AdminService();
             Meetup meetup = new Meetup(
-              meetupID: _meetupIdController.text,
               meetupName: _meetupNameController.text,
               details: _detailsController.text,
               address: _addressController.text,

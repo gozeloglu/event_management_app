@@ -5,7 +5,6 @@ import 'package:event_management_app/services/participant_service.dart';
 import 'package:event_management_app/services/question_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 import '../map_page.dart';
 
@@ -21,7 +20,7 @@ class ParticipantMeetupDetail extends StatefulWidget {
     this.lastName,
   }) : super(key: key);
 
-  final String meetupID;
+  final int meetupID;
   final String username;
   final bool isRegisterPage;
   final String startDate;
@@ -136,7 +135,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                     children: <Widget>[
                       ListTile(
                         title: Text("Meetup ID"),
-                        subtitle: Text(snapshot.data.meetupID),
+                        subtitle: Text(snapshot.data.meetupID.toString()),
                         leading: Icon(Icons.confirmation_number),
                       ),
                       ListTile(

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'admin_add_meetup.dart';
 import 'admin_meetup_detail.dart';
 import 'admin_profile.dart';
-import 'admin_qr_list.dart';
 import 'admin_report_list.dart';
 
 class AdminHomePage extends StatefulWidget {
@@ -68,24 +67,6 @@ class AdminHomeState extends State<AdminHomePage> {
                           builder: (context) => new AdminProfile(
                                 username: widget.username,
                               )));
-                }
-              },
-            ),
-            ListTile(
-              title: Text(
-                "QR Code",
-                style: TextStyle(fontSize: 20),
-              ),
-              leading: Icon(Icons.camera),
-              onTap: () {
-                // TODO Fill in this part
-
-                if (_scaffoldKey.currentState.isDrawerOpen) {
-                  _scaffoldKey.currentState.openEndDrawer();
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => new QRCodeList()));
                 }
               },
             ),
@@ -180,7 +161,7 @@ class AdminHomeState extends State<AdminHomePage> {
                         onTap: () {
                           _handleMeetupDeleteState(
                               context,
-                              snapshot.data[index]["meetupID"],
+                              snapshot.data[index]["id"],
                               startDates[index].split("-"));
                         },
                       ),
@@ -235,7 +216,7 @@ class AdminHomeState extends State<AdminHomePage> {
   /// it just set states
   /// If meetup is deleted successfully, it shows up a snack bar
   void _handleMeetupDeleteState(
-      BuildContext context, String meetupID, List<String> startDate) async {
+      BuildContext context, int meetupID, List<String> startDate) async {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(

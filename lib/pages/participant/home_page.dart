@@ -7,7 +7,6 @@ import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../routes.dart';
 import 'my_meetups_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -184,7 +183,7 @@ class HomeState extends State<HomePage> {
                                     builder: (context) =>
                                         new ParticipantMeetupDetail(
                                           meetupID: snapshot.data[index]
-                                              ["meetupID"],
+                                              ["id"],
                                           username: widget.username,
                                           isRegisterPage: true,
                                           startDate: meetupDates[index],

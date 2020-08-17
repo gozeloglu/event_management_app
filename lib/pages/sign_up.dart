@@ -45,27 +45,27 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _formKey,
-        child: Container(
-          padding: EdgeInsets.only(left: 10, right: 10, top: 20),
-          margin: EdgeInsets.all(10),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                title(),
-                name(),
-                lastName(),
-                email(),
-                username(),
-                password(),
-                age(),
-                identityNumber(),
-                signUpButton(),
-              ],
-            ),
+      key: _formKey,
+      child: Container(
+        padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+        margin: EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              title(),
+              name(),
+              lastName(),
+              email(),
+              username(),
+              password(),
+              age(),
+              identityNumber(),
+              signUpButton(),
+            ],
           ),
         ),
-      );
+      ),
+    );
   }
 
   Widget title() {
@@ -94,10 +94,9 @@ class _SignUpState extends State<SignUp> {
           return null;
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "First Name",
-          prefixIcon: Icon(Icons.person_outline)
-        ),
+            border: OutlineInputBorder(),
+            labelText: "First Name",
+            prefixIcon: Icon(Icons.person_outline)),
       ),
     );
   }
@@ -115,10 +114,9 @@ class _SignUpState extends State<SignUp> {
           return null;
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Last Name",
-          prefixIcon: Icon(Icons.person_outline)
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Last Name",
+            prefixIcon: Icon(Icons.person_outline)),
       ),
     );
   }
@@ -136,10 +134,9 @@ class _SignUpState extends State<SignUp> {
           return null;
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "E-Mail",
-          prefixIcon: Icon(Icons.email)
-        ),
+            border: OutlineInputBorder(),
+            labelText: "E-Mail",
+            prefixIcon: Icon(Icons.email)),
       ),
     );
   }
@@ -157,10 +154,9 @@ class _SignUpState extends State<SignUp> {
           return null;
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Username",
-          prefixIcon: Icon(Icons.person)
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Username",
+            prefixIcon: Icon(Icons.person)),
       ),
     );
   }
@@ -179,19 +175,18 @@ class _SignUpState extends State<SignUp> {
           return null;
         },
         decoration: InputDecoration(
-          suffixIcon: IconButton(
-              icon: Icon(
-                _passwordVisible ? Icons.visibility : Icons.visibility_off,
-              ),
-              onPressed: () {
-                setState(() {
-                  _passwordVisible = !_passwordVisible;
-                });
-              }),
-          border: OutlineInputBorder(),
-          labelText: "Password",
-          prefixIcon: Icon(Icons.lock)
-        ),
+            suffixIcon: IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                }),
+            border: OutlineInputBorder(),
+            labelText: "Password",
+            prefixIcon: Icon(Icons.lock)),
       ),
     );
   }
@@ -210,10 +205,9 @@ class _SignUpState extends State<SignUp> {
           return null;
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Age",
-          prefixIcon: Icon(Icons.date_range)
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Age",
+            prefixIcon: Icon(Icons.date_range)),
       ),
     );
   }
@@ -224,20 +218,18 @@ class _SignUpState extends State<SignUp> {
       child: TextFormField(
         controller: _identityNumberController,
         maxLines: 1,
-        validator:(value) {
+        validator: (value) {
           if (value.isEmpty) {
             return "Please enter your identity numbebr";
           }
           return null;
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Identity Number",
-          prefixIcon: Icon(Icons.perm_identity)
-        ),
+            border: OutlineInputBorder(),
+            labelText: "Identity Number",
+            prefixIcon: Icon(Icons.perm_identity)),
       ),
     );
-
   }
 
   Widget signUpButton() {
@@ -257,31 +249,30 @@ class _SignUpState extends State<SignUp> {
             int _age = int.parse(_ageController.text);
             ParticipantService participantService = new ParticipantService();
             Participant newParticipant = new Participant(
-              firstName: _nameController.text,
-              lastName: _lastnameController.text,
-              email: _emailController.text,
-              userName: _usernameController.text,
-              password: _passwordController.text,
-              age: _age,
-              identityNumber: _identityNumberController.text
-            );
-            participantService.saveUser(newParticipant).then((response){
+                firstName: _nameController.text,
+                lastName: _lastnameController.text,
+                email: _emailController.text,
+                userName: _usernameController.text,
+                password: _passwordController.text,
+                age: _age,
+                identityNumber: _identityNumberController.text);
+            participantService.saveUser(newParticipant).then((response) {
               if (response.statusCode < 300) {
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('Successful Sign Up')));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  'Successful Sign Up',
+                  style: TextStyle(fontSize: 20),
+                )));
               } else {
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('Sign Up is not successful!')));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  'Sign Up is not successful!',
+                  style: TextStyle(fontSize: 20),
+                )));
               }
             }).catchError((error) {
               print(error);
             });
-            ///Scaffold.of(context)
-               /// .showSnackBar(SnackBar(content: Text('Successful Sign Up')));
-            //Navigator.pushNamedAndRemoveUntil(
-            //  context, Routes.home, ModalRoute.withName('/'));
-            /// Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                /// HomePage()), (Route<dynamic> route) => false);
           } else {
             // If fields are empty
             // TODO Show up appropriate error message if not valid user

@@ -9,7 +9,7 @@ import 'admin/participant_details.dart';
 class ParticipantList extends StatefulWidget {
   ParticipantList({Key key, this.meetupID, this.meetupName}) : super(key: key);
 
-  final String meetupID;
+  final int meetupID;
   final String meetupName;
 
   ParticipantListState createState() => ParticipantListState();

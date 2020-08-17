@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class QuestionListPage extends StatefulWidget {
   QuestionListPage({Key key, this.meetupID}) : super(key: key);
 
-  final String meetupID;
+  final int meetupID;
 
   QuestionListPageState createState() => QuestionListPageState();
 }

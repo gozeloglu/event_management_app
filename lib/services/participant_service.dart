@@ -82,9 +82,10 @@ class ParticipantService {
   /// This method fetches the meetup details of the given meetup id
   /// @param meetupID specifies the id of the meetup that we want to get details
   /// @return Meetup object which includes the information about meetup
-  Future<Meetup> getMeetupDetails(String meetupID) async {
+  Future<Meetup> getMeetupDetails(int meetupID) async {
     http.Response response = await http.get(
-        "http://10.0.2.2:8080/participants/meetup-detail/" + meetupID,
+        "http://10.0.2.2:8080/participants/meetup-detail/" +
+            meetupID.toString(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
@@ -101,12 +102,12 @@ class ParticipantService {
   /// @param username specifies the person who wants to attend the meetup
   /// @param meetupID specifies the meetup that the participant wants to attend
   /// @return HTTP Response object
-  Future<http.Response> registerMeetup(String username, String meetupID) async {
+  Future<http.Response> registerMeetup(String username, int meetupID) async {
     http.Response response = await http.post(
         "http://10.0.2.2:8080/participants/register-participant/" +
             username +
             "/" +
-            meetupID,
+            meetupID.toString(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         });
@@ -183,12 +184,12 @@ class ParticipantService {
     }
   }
 
-  Future<http.Response> unRegisterMeetup(String username, String meetupID) async {
+  Future<http.Response> unRegisterMeetup(String username, int meetupID) async {
     http.Response response = await http.post(
         "http://10.0.2.2:8080/participants/unregister-participant/" +
             username +
             "/" +
-            meetupID,
+            meetupID.toString(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         });

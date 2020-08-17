@@ -10,7 +10,7 @@ class Meetup {
     this.quota,
     this.registeredCount
 });
-  final String meetupID;
+  final int meetupID;
   final String meetupName;
   final String details;
   final String address;
@@ -22,7 +22,7 @@ class Meetup {
 
   factory Meetup.fromJson(Map<String, dynamic> json) {
     return Meetup(
-      meetupID: json["meetupID"] as String,
+      meetupID: json["id"] as int,
       meetupName: json["meetupName"] as String,
       details: json["details"] as String,
       address: json["address"] as String,

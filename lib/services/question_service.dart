@@ -5,15 +5,16 @@ import 'package:http/http.dart' as http;
 
 class QuestionService {
   Future<http.Response> saveNewQuestion(
-      Question question, String meetupID) async {
+      Question question, int meetupID) async {
     http.Response response = await http.post(
-        "http://10.0.2.2:8080/question/add-new-question/" + meetupID,
+        "http://10.0.2.2:8080/question/add-new-question/" + meetupID.toString(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, dynamic>{
           "askedQuestion": question.askedQuestion,
           "isAnswered": question.isAnswered,
+          "meetupID": meetupID
         }));
 
     if (response.statusCode < 400) {
@@ -23,10 +24,10 @@ class QuestionService {
     }
   }
 
-  Future<List<dynamic>> getQuestions(String meetupID) async {
+  Future<List<dynamic>> getQuestions(int meetupID) async {
     print("get questions $meetupID");
     http.Response response = await http.get(
-        "http://10.0.2.2:8080/question/all-questions/" + meetupID,
+        "http://10.0.2.2:8080/question/all-questions/" + meetupID.toString(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });

@@ -10,12 +10,12 @@ import '../admin_participant_list_page.dart';
 import 'meetup_update.dart';
 
 class AdminMeetupDetail extends StatefulWidget {
-  AdminMeetupDetail(String meetupId, bool _canAnswer) {
+  AdminMeetupDetail(int meetupId, bool _canAnswer) {
     this.meetupId = meetupId;
     this.canAnswer = _canAnswer;
   }
 
-  String meetupId;
+  int meetupId;
   bool canAnswer;
 
   @override
@@ -104,7 +104,7 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                       children: [
                         ListTile(
                           title: Text("Meetup ID"),
-                          subtitle: Text(snapshot.data.meetupID),
+                          subtitle: Text(snapshot.data.meetupID.toString()),
                         ),
                         ListTile(
                           title: Text("Meetup Name"),

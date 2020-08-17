@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MeetupUpdate extends StatefulWidget {
-  final String meetupID;
+  final int meetupID;
   final String meetupName;
   final String details;
   final String address;
@@ -35,7 +35,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
   DateTime startDate;
   DateTime endDate;
 
-  TextEditingController _meetupIdController;
   TextEditingController _meetupNameController;
   TextEditingController _detailsController;
   TextEditingController _addressController;
@@ -50,7 +49,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
   void initState() {
     startDate = DateTime.parse(widget.startDate);
     endDate = DateTime.parse(widget.endDate);
-    _meetupIdController = new TextEditingController(text: widget.meetupID);
     _meetupNameController = new TextEditingController(text: widget.meetupName);
     _detailsController = new TextEditingController(text: widget.details);
     _addressController = new TextEditingController(text: widget.address);
@@ -65,7 +63,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
   @override
   void dispose() {
     _meetupNameController.dispose();
-    _meetupIdController.dispose();
     _detailsController.dispose();
     _addressController.dispose();
     _placeNameController.dispose();
@@ -113,29 +110,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
                     ),
                   ),
                 )));
-  }
-
-  Widget meetupIdWiget() {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      child: TextFormField(
-        controller: _meetupIdController,
-        maxLines: 1,
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Meetup ID should be filled";
-          } else if (value.length != 5) {
-            return "Meetup ID field should have 5 chars";
-          } else {
-            return null;
-          }
-        },
-        decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: "Meetup ID",
-            prefixIcon: Icon(Icons.confirmation_number)),
-      ),
-    );
   }
 
   Widget meetupNameWidget() {
@@ -371,7 +345,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
 
             AdminService adminService = new AdminService();
             Meetup meetup = new Meetup(
-              meetupID: _meetupIdController.text,
               meetupName: _meetupNameController.text,
               details: _detailsController.text,
               address: _addressController.text,
