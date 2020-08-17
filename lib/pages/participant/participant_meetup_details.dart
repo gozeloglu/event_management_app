@@ -1,6 +1,8 @@
+import 'package:event_management_app/models/mail.dart';
 import 'package:event_management_app/models/meetup.dart';
 import 'package:event_management_app/models/question.dart';
 import 'package:event_management_app/pages/qr_code.dart';
+import 'package:event_management_app/services/admin_service.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:event_management_app/services/question_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +20,7 @@ class ParticipantMeetupDetail extends StatefulWidget {
     this.isQRCodeVisible,
     this.firstName,
     this.lastName,
+    this.email,
   }) : super(key: key);
 
   final int meetupID;
@@ -27,14 +30,18 @@ class ParticipantMeetupDetail extends StatefulWidget {
   final bool isQRCodeVisible;
   final String firstName;
   final String lastName;
+  final String email;
 
   @override
-  ParticipantMeetupDetailState createState() => ParticipantMeetupDetailState();
+  ParticipantMeetupDetailState createState() =>
+      ParticipantMeetupDetailState();
 }
 
 class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
+
   bool _refresh = false;
   ParticipantService participantService = new ParticipantService();
+  AdminService adminService = new AdminService();
   TextEditingController _questionTextController = TextEditingController();
   QuestionService questionService = new QuestionService();
   final _formKey = GlobalKey<FormState>();
@@ -199,9 +206,34 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                 onPressed: () {
                                   // TODO Fill in
                                   if (widget.isRegisterPage) {
+                                    String _subject =
+                                        "See you at " + _meetupName;
+                                    print(_subject);
+                                    print(_meetupName);
+                                    print(widget.firstName);
+                                    String _mail = "Dear Gokhan" +
+                                        ",\n\nThank you for attending " +
+                                        _meetupName +
+                                        ". We are looking for you!\n\nMeetup Name: " +
+                                        _meetupName +
+                                        "\nFirst Name: " +
+                                        widget.firstName +
+                                        "\nLast Name: " +
+                                        widget.lastName;
+
+                                    String _qrCodeMsg = _meetupName +
+                                        ". We are looking for you!\n\nMeetup Name: " +
+                                        _meetupName +
+                                        "\nFirst Name: " +
+                                        widget.firstName +
+                                        "\nLast Name: " +
+                                        widget.lastName;
+                                    print(widget.email);
+                                    Mail mail = generateMail(
+                                        widget.email, _subject, _mail, _qrCodeMsg);
                                     participantService
-                                        .registerMeetup(
-                                            widget.username, widget.meetupID)
+                                        .registerMeetup(widget.username,
+                                            widget.meetupID, mail)
                                         .then((response) {
                                       if (response.statusCode < 400) {
                                         setState(() {
@@ -209,6 +241,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                         });
                                         Scaffold.of(context).showSnackBar(
                                             SnackBar(
+                                                duration: Duration(seconds: 1),
                                                 content: Text(response.body,
                                                     style: TextStyle(
                                                         fontSize: 20))));
@@ -221,6 +254,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                         )));
                                       }
                                     }).catchError((onError) {
+                                      print(onError.toString());
                                       Scaffold.of(context).showSnackBar(
                                           SnackBar(
                                               content: Text(
@@ -406,5 +440,11 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
     } else {
       return false;
     }
+  }
+
+  Mail generateMail(String to, String subject, String body, String qrCodeMsg) {
+    Mail mail =
+        Mail(to: to, subject: subject, body: body, qrCodeMsg: qrCodeMsg);
+    return mail;
   }
 }

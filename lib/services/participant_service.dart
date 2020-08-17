@@ -1,5 +1,5 @@
+import 'package:event_management_app/models/mail.dart';
 import 'package:event_management_app/models/meetup.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:event_management_app/models/participant.dart';
@@ -102,7 +102,8 @@ class ParticipantService {
   /// @param username specifies the person who wants to attend the meetup
   /// @param meetupID specifies the meetup that the participant wants to attend
   /// @return HTTP Response object
-  Future<http.Response> registerMeetup(String username, int meetupID) async {
+  Future<http.Response> registerMeetup(
+      String username, int meetupID, Mail mail) async {
     http.Response response = await http.post(
         "http://10.0.2.2:8080/participants/register-participant/" +
             username +
@@ -110,7 +111,13 @@ class ParticipantService {
             meetupID.toString(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
-        });
+        },
+        body: jsonEncode(<String, dynamic>{
+          "to": mail.to,
+          "subject": mail.subject,
+          "mail": mail.body,
+          "qrCodeString": mail.qrCodeMsg,
+        }));
 
     if (response.statusCode < 400) {
       return response;

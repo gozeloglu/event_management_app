@@ -10,11 +10,12 @@ import 'package:flutter/material.dart';
 import 'my_meetups_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.username, this.firstName, this.lastName})
+  HomePage({Key key, this.username, this.firstName, this.lastName, this.email})
       : super(key: key);
   final String username;
   final String firstName;
   final String lastName;
+  final String email;
 
   @override
   HomeState createState() => HomeState();
@@ -188,6 +189,9 @@ class HomeState extends State<HomePage> {
                                           isRegisterPage: true,
                                           startDate: meetupDates[index],
                                           isQRCodeVisible: false,
+                                          firstName: widget.firstName,
+                                          lastName: widget.lastName,
+                                          email: widget.email,
                                         )));
                           },
                         ),

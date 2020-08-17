@@ -151,9 +151,11 @@ class LoginState extends State<Login> {
               if (response.statusCode < 400) {
                 String firstName = "";
                 String lastName = "";
+                String email = "";
                 participantService.getParticipantDetails(username).then((res) {
                   firstName = res.firstName;
                   lastName = res.lastName;
+                  email = res.email;
                   Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(
                     'Successful Login',
@@ -167,6 +169,7 @@ class LoginState extends State<Login> {
                                     Utf8Decoder().convert(firstName.codeUnits),
                                 lastName:
                                     Utf8Decoder().convert(lastName.codeUnits),
+                            email: Utf8Decoder().convert(email.codeUnits),
                               )),
                       (Route<dynamic> route) => false);
                 });
