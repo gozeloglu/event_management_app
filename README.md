@@ -1,6 +1,10 @@
-# event_management_app
+# :computer: :iphone: event_management_app
 
-Event Management Application
+This is a mobile application which is built for TUBITAK BILGEM's events. It has some basic operations like sharing new events, registering the exisng events, asking questioons to speaker and so on. You can access the backend-side code from [here](https://github.com/gozeloglu/event-management-system-backend). 
+
+I built mobile application with **Flutter**. **Spring Boot** is used for backend side, and **PostgreSQL** is used for database.
+
+# 📱 UI Examples
 
 <img src="Images/Admin_Login.png" width=144 height=288/> <img src="Images/Admin_add_meetup.png" width=144 height=288/> 
 <img src="Images/Admin_participant_detail.png" width=144 height=288/> <img src="Images/Admin_participant_list.png" width=144 height=288/> 
