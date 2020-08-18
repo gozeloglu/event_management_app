@@ -2,17 +2,17 @@
 
 Event Management Application
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-# event_management_app
+<img src="Images/Admin_Login.png" width=144 height=288/> <img src="Images/Admin_add_meetup.png" width=144 height=288/> 
+<img src="Images/Admin_participant_detail.png" width=144 height=288/> <img src="Images/Admin_participant_list.png" width=144 height=288/> 
+<img src="Images/Admin_pie_chart.png" width=144 height=288/> <img src="Images/Admin_profile.png" width=144 height=288/> 
+<img src="Images/Admin_question_are_you_sure.png" width=144 height=288/> <img src="Images/Admin_question_list.png" width=144 height=288/> 
+<img src="Images/Admin_report.png" width=144 height=288/> <img src="Images/GoogleMaps.png" width=144 height=288/>
+<img src="Images/Mail.png" width=144 height=288/> <img src="Images/Mail_QR_Code.png" width=144 height=288/>
+<img src="Images/User_Home.png" width=144 height=288/> <img src="Images/User_Login.png" width=144 height=288/> 
+<img src="Images/User_Profile_2.png" width=144 height=288/> <img src="Images/User_QR_Code.png" width=144 height=288/>
+<img src="Images/User_SingUp.png" width=144 height=288/> <img src="Images/User_ask_question.png" width=144 height=288/>
+<img src="Images/User_drawer.png" width=144 height=288/> <img src="Images/User_meetup_detail.png" width=144 height=288/>
+<img src="Images/User_meetup_detail_2.png" width=144 height=288/> <img src="Images/User_my_meetups.png" width=144 height=288/>
+<img src="Images/User_my_meetups.png" width=144 height=288/> <img src="Images/User_profile_1.png" width=144 height=288/>
+<img src="Images/User_profile_Update.png" width=144 height=288/> <img src="Images/User_unregister.png" width=144 height=288/>
+<img src="Images/admin_meetup_detail.png" width=144 height=288/>
