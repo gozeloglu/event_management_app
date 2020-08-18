@@ -33,12 +33,10 @@ class ParticipantMeetupDetail extends StatefulWidget {
   final String email;
 
   @override
-  ParticipantMeetupDetailState createState() =>
-      ParticipantMeetupDetailState();
+  ParticipantMeetupDetailState createState() => ParticipantMeetupDetailState();
 }
 
 class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
-
   bool _refresh = false;
   ParticipantService participantService = new ParticipantService();
   AdminService adminService = new AdminService();
@@ -97,11 +95,11 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                 _displayQuestionDialog(context);
               } else {
                 final snackBar = SnackBar(
-                  duration: Duration(seconds: 1),
+                    duration: Duration(seconds: 1),
                     content: Text(
-                  'Meetup is not started. You cannot ask your question!',
-                  style: TextStyle(fontSize: 20),
-                ));
+                      'Meetup is not started. You cannot ask your question!',
+                      style: TextStyle(fontSize: 20),
+                    ));
                 _scaffoldKey.currentState.showSnackBar(snackBar);
               }
             },
@@ -212,7 +210,8 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                     print(_subject);
                                     print(_meetupName);
                                     print(widget.firstName);
-                                    String _mail = "Dear " + widget.firstName +
+                                    String _mail = "Dear " +
+                                        widget.firstName +
                                         ",\n\nThank you for attending " +
                                         _meetupName +
                                         ". We are looking for you!\n\nMeetup Name: " +
@@ -230,8 +229,8 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                         "\nLast Name: " +
                                         widget.lastName;
                                     print(widget.email);
-                                    Mail mail = generateMail(
-                                        widget.email, _subject, _mail, _qrCodeMsg);
+                                    Mail mail = generateMail(widget.email,
+                                        _subject, _mail, _qrCodeMsg);
                                     participantService
                                         .registerMeetup(widget.username,
                                             widget.meetupID, mail)
@@ -377,33 +376,37 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                         if (response.statusCode < 400) {
                           Navigator.pop(context);
                           final snackBar = SnackBar(
+                              duration: Duration(seconds: 2),
                               content: Text(
-                            'Your question is sent!',
-                            style: TextStyle(fontSize: 20),
-                          ));
+                                'Your question is sent!',
+                                style: TextStyle(fontSize: 20),
+                              ));
                           _scaffoldKey.currentState.showSnackBar(snackBar);
                         } else {
                           final snackBar = SnackBar(
+                              duration: Duration(seconds: 2),
                               content: Text(
-                            'Your question could not asked',
-                            style: TextStyle(fontSize: 20),
-                          ));
+                                'Your question could not asked',
+                                style: TextStyle(fontSize: 20),
+                              ));
                           _scaffoldKey.currentState.showSnackBar(snackBar);
                         }
                       }).catchError((onError) {
                         final snackBar = SnackBar(
+                            duration: Duration(seconds: 2),
                             content: Text(
-                          'Something went wrong!',
-                          style: TextStyle(fontSize: 20),
-                        ));
+                              'Something went wrong!',
+                              style: TextStyle(fontSize: 20),
+                            ));
                         _scaffoldKey.currentState.showSnackBar(snackBar);
                       });
                     } else {
                       final snackBar = SnackBar(
+                          duration: Duration(seconds: 2),
                           content: Text(
-                        'Error!',
-                        style: TextStyle(fontSize: 20),
-                      ));
+                            'Error!',
+                            style: TextStyle(fontSize: 20),
+                          ));
                       _scaffoldKey.currentState.showSnackBar(snackBar);
                     }
                   },

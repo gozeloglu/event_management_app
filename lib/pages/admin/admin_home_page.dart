@@ -205,6 +205,7 @@ class AdminHomeState extends State<AdminHomePage> {
     } else if (result) {
       setState(() {});
       final snackBar = SnackBar(
+        duration: Duration(seconds: 2),
         content: Text("New meetup is added!", style: TextStyle(fontSize: 20)),
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
