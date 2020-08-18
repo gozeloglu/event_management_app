@@ -103,41 +103,95 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                     child: Column(
                       children: [
                         ListTile(
-                          title: Text("Meetup ID"),
-                          subtitle: Text(snapshot.data.meetupID.toString()),
+                          title: Text(
+                            "Meetup ID",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.meetupID.toString(),
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         ListTile(
-                          title: Text("Meetup Name"),
-                          subtitle: Text(snapshot.data.meetupName),
+                          title: Text(
+                            "Meetup Name",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.meetupName,
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         ListTile(
-                          title: Text("Details"),
-                          subtitle: Text(snapshot.data.details, maxLines: 2),
+                          title: Text(
+                            "Details",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.details,
+                            maxLines: 2,
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         ListTile(
-                          title: Text("Address"),
-                          subtitle: Text(snapshot.data.address),
+                          title: Text(
+                            "Address",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.address,
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         ListTile(
-                          title: Text("Place Name"),
-                          subtitle: Text(snapshot.data.placeName),
+                          title: Text(
+                            "Place Name",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.placeName,
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         ListTile(
-                          title: Text("Start Date"),
-                          subtitle: Text(snapshot.data.startDate),
+                          title: Text(
+                            "Start Date",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.startDate,
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         ListTile(
-                          title: Text("End Date"),
-                          subtitle: Text(snapshot.data.endDate),
+                          title: Text(
+                            "End Date",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.endDate,
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         ListTile(
-                          title: Text("Quota"),
-                          subtitle: Text(snapshot.data.quota.toString()),
+                          title: Text(
+                            "Quota",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.quota.toString(),
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         ListTile(
-                          title: Text("Registered User Count"),
-                          subtitle:
-                              Text(snapshot.data.registeredCount.toString()),
+                          title: Text(
+                            "Registered User Count",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            snapshot.data.registeredCount.toString(),
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                         Divider(
                           height: 20.0,
@@ -150,7 +204,7 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                 alignment: FractionalOffset.bottomLeft,
                                 child: MaterialButton(
                                   color: Colors.red,
-                                  height: 64,
+                                  height: 48,
                                   padding:
                                       const EdgeInsets.fromLTRB(48, 0, 48, 0),
                                   shape: new RoundedRectangleBorder(
@@ -188,7 +242,7 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                 alignment: FractionalOffset.bottomRight,
                                 child: MaterialButton(
                                   color: Colors.green,
-                                  height: 64,
+                                  height: 48,
                                   padding:
                                       const EdgeInsets.fromLTRB(48, 0, 48, 0),
                                   shape: new RoundedRectangleBorder(
@@ -209,23 +263,6 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                             snapshot.data.registeredCount);
                                     _handleUpdateMeetupState(
                                         context, updatedMeetup);
-
-                                    /*
-                                    Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                new MeetupUpdate(
-                                                    snapshot.data.meetupID,
-                                                    snapshot.data.meetupName,
-                                                    snapshot.data.details,
-                                                    snapshot.data.address,
-                                                    snapshot.data.placeName,
-                                                    snapshot.data.startDate,
-                                                    snapshot.data.endDate,
-                                                    snapshot.data.quota,
-                                                    snapshot.data
-                                                        .registeredCount)));*/
                                   },
                                   child: Text(
                                     "Update",
@@ -288,10 +325,11 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
     } else {
       setState(() {});
       final snackBar = SnackBar(
+          duration: Duration(seconds: 2),
           content: Text(
-        "Meetup is updated",
-        style: TextStyle(fontSize: 20),
-      ));
+            "Meetup is updated",
+            style: TextStyle(fontSize: 20),
+          ));
       _scaffoldKey.currentState.showSnackBar(snackBar);
     }
   }

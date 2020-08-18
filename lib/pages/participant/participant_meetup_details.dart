@@ -97,6 +97,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                 _displayQuestionDialog(context);
               } else {
                 final snackBar = SnackBar(
+                  duration: Duration(seconds: 1),
                     content: Text(
                   'Meetup is not started. You cannot ask your question!',
                   style: TextStyle(fontSize: 20),
@@ -211,7 +212,7 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                     print(_subject);
                                     print(_meetupName);
                                     print(widget.firstName);
-                                    String _mail = "Dear Gokhan" +
+                                    String _mail = "Dear " + widget.firstName +
                                         ",\n\nThank you for attending " +
                                         _meetupName +
                                         ". We are looking for you!\n\nMeetup Name: " +

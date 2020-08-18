@@ -40,14 +40,14 @@ class QRCodeState extends State<QRCode> {
       body: Center(
         child: Container(
           child: QrImage(
-            data: "First Name: " +
+            data: "Meetup Name: " +
+                widget.meetupName +
+                "\n" +
+                "First Name: " +
                 widget.participantName +
                 "\n" +
-                "Last Name:" +
+                "Last Name: " +
                 widget.participantLastName +
-                "\n" +
-                "Meetup Name: " +
-                widget.meetupName +
                 "\n",
             version: QrVersions.auto,
             size: 320,
