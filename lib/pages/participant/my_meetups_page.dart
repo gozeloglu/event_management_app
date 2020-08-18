@@ -59,11 +59,8 @@ class MyMeetupState extends State<MyMeetups> {
                         title: Text(meetupNameList[index]),
                         subtitle: Text(meetupDetailList[index], maxLines: 1),
                         onTap: () {
-                          // TODO Details page
-                          _handleRebuildState(
-                              context,
-                              snapshot.data[index]["id"],
-                              startDates[index]);
+                          _handleRebuildState(context,
+                              snapshot.data[index]["id"], startDates[index]);
                         },
                       ),
                     );
@@ -93,6 +90,9 @@ class MyMeetupState extends State<MyMeetups> {
     );
   }
 
+  /// This method handles the state management for changes in meetup detail page
+  /// @param meetupID is the id of the meetup that we tapped
+  /// @param _startDate is the start date of the meetup
   void _handleRebuildState(
       BuildContext context, int meetupID, String _startDate) async {
     final result = await Navigator.push(

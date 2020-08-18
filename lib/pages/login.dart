@@ -4,7 +4,6 @@ import 'package:event_management_app/pages/participant/home_page.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:event_management_app/routes.dart';
 
 class LoginStateless extends StatelessWidget {
   @override
@@ -169,7 +168,7 @@ class LoginState extends State<Login> {
                                     Utf8Decoder().convert(firstName.codeUnits),
                                 lastName:
                                     Utf8Decoder().convert(lastName.codeUnits),
-                            email: Utf8Decoder().convert(email.codeUnits),
+                                email: Utf8Decoder().convert(email.codeUnits),
                               )),
                       (Route<dynamic> route) => false);
                 });

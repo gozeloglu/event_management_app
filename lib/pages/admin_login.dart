@@ -2,9 +2,6 @@ import 'package:event_management_app/models/admin.dart';
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/gozel/OneDrive/Desktop/event_management_app/event_management_app/lib/pages/participant/home_page.dart';
-import 'package:event_management_app/routes.dart';
-
 import 'admin/admin_home_page.dart';
 
 class AdminLoginStateless extends StatelessWidget {
@@ -166,12 +163,10 @@ class AdminLoginState extends State<AdminLogin> {
               Scaffold.of(context).showSnackBar(
                   SnackBar(content: Text('Something went wrong!')));
             });
-            //Navigator.pushNamedAndRemoveUntil(
-            //  context, Routes.home, ModalRoute.withName('/'));
           } else {
             // If fields are empty
-            // TODO Show up appropriate error message if not valid user
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error')));
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('Error', style: TextStyle(fontSize: 20))));
           }
         },
       ),

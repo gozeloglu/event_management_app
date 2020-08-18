@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:event_management_app/models/admin.dart';
 import 'package:event_management_app/models/admin_dto.dart';
-import 'package:event_management_app/models/mail.dart';
 import 'package:event_management_app/models/meetup.dart';
 import 'package:http/http.dart' as http;
 

@@ -27,7 +27,6 @@ class ParticipantListState extends State<ParticipantList> {
           centerTitle: true,
         ),
 
-        /// listAllParticipants
         body: Center(
           child: FutureBuilder<List<dynamic>>(
               future: adminService.listAllParticipants(widget.meetupID),
@@ -47,7 +46,6 @@ class ParticipantListState extends State<ParticipantList> {
                     List<String> participantUsernameList = List();
 
                     for (int i = 0; i < snapshot.data.length; i++) {
-                      // Utf8Decoder().convert(snapshot.data.lastName.codeUnits)
                       participantFirstNameList.add(Utf8Decoder()
                           .convert(snapshot.data[i]["firstName"].codeUnits));
                       participantLastNameList.add(Utf8Decoder()
@@ -79,8 +77,6 @@ class ParticipantListState extends State<ParticipantList> {
                                 style: TextStyle(fontSize: 20),
                               ),
                               onTap: () {
-                                // TODO Participant details page
-                                /// ParticipantDetails
                                 Navigator.push(
                                     context,
                                     new MaterialPageRoute(
@@ -96,9 +92,6 @@ class ParticipantListState extends State<ParticipantList> {
                         });
                   }
                 } else if (snapshot.data == null) {
-                  print("No data");
-                  print(snapshot.data);
-                  //noDataMessage();
                   return Center(
                     child: Text(
                       "Book basket is empty!",

@@ -1,11 +1,7 @@
 import 'dart:convert';
 
-import 'package:event_management_app/models/admin.dart';
 import 'package:event_management_app/models/admin_dto.dart';
-import 'package:event_management_app/models/participant.dart';
-import 'file:///C:/Users/gozel/OneDrive/Desktop/event_management_app/event_management_app/lib/pages/participant/profile_update.dart';
 import 'package:event_management_app/services/admin_service.dart';
-import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,9 +40,9 @@ class AdminProfileState extends State<AdminProfile> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               String _firstName =
-              Utf8Decoder().convert(snapshot.data.firstName.codeUnits);
+                  Utf8Decoder().convert(snapshot.data.firstName.codeUnits);
               String _lastName =
-              Utf8Decoder().convert(snapshot.data.lastName.codeUnits);
+                  Utf8Decoder().convert(snapshot.data.lastName.codeUnits);
               return Container(
                 padding: const EdgeInsets.all(16),
                 child: SingleChildScrollView(
@@ -142,47 +138,6 @@ class AdminProfileState extends State<AdminProfile> {
                       Divider(
                         height: 20.0,
                       ),
-                    /*  Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Align(
-                              alignment: FractionalOffset.center,
-                              child: MaterialButton(
-                                color: Colors.green,
-                                height: 64,
-                                padding:
-                                const EdgeInsets.fromLTRB(48, 0, 48, 0),
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                    new BorderRadius.circular(20)),
-                                onPressed: () async {
-                                  // TODO Fill in
-                                  final result = await Navigator.push(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) => ProfileUpdate(
-                                              firstName: _firstName,
-                                              lastName: _lastName,
-                                              username: snapshot.data.userName,
-                                              email: snapshot.data.email,
-                                              age: snapshot.data.age,
-                                              identityNumber: snapshot
-                                                  .data.identityNumber)));
-                                  if (result) {
-                                    setState(() {});
-                                  }
-                                },
-                                child: Text(
-                                  "Update My Profile",
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),*/
                     ],
                   ),
                 ),

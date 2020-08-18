@@ -58,7 +58,6 @@ class AdminHomeState extends State<AdminHomePage> {
               ),
               leading: Icon(Icons.person),
               onTap: () {
-                // TODO Fill in this part
                 if (_scaffoldKey.currentState.isDrawerOpen) {
                   _scaffoldKey.currentState.openEndDrawer();
                   Navigator.push(

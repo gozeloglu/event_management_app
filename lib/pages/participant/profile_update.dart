@@ -240,12 +240,14 @@ class ProfileUpdateState extends State<ProfileUpdate> {
                   style: TextStyle(fontSize: 20),
                 )));
               } else {
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text(response.body)));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content:
+                        Text(response.body, style: TextStyle(fontSize: 20))));
               }
             }).catchError((onError) {
-              Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Something went wrong')));
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text('Something went wrong',
+                      style: TextStyle(fontSize: 20))));
             });
           } else {
             // If fields are empty

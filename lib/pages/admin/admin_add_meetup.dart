@@ -74,29 +74,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
     );
   }
 
- /* Widget meetupIdWiget() {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      child: TextFormField(
-        controller: _meetupIdController,
-        maxLines: 1,
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Meetup ID should be filled";
-          } else if (value.length != 5) {
-            return "Meetup ID field should have 5 chars";
-          } else {
-            return null;
-          }
-        },
-        decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: "Meetup ID",
-            prefixIcon: Icon(Icons.confirmation_number)),
-      ),
-    );
-  }*/
-
   Widget meetupNameWidget() {
     return Container(
       padding: const EdgeInsets.all(15),
@@ -323,8 +300,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
         onPressed: () {
           // If all fields are filled
           if (_formKey.currentState.validate()) {
-            // Save the meetup
-
             int _quota = int.parse(_quotaController.text);
 
             String startDateWithT = startDate.toString().split(" ")[0];
@@ -376,7 +351,6 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
             }
           } else {
             // If fields are empty
-            // TODO Show up appropriate error message if not valid user
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text(
               'Error',
@@ -388,6 +362,8 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
     );
   }
 
+  /// This method creates the start date picker for adding new meetup
+  /// @return Picked DateTime for start date
   Future<DateTime> _selectStartDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -403,6 +379,8 @@ class AdminAddMeetupState extends State<AdminAddMeetup> {
     return picked;
   }
 
+  /// This method creates the end date picker for adding new meetup
+  /// @return Picked DateTime for end date
   Future<Null> _selectEndDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,

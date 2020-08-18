@@ -1,5 +1,4 @@
 import 'package:event_management_app/models/participant.dart';
-import 'file:///C:/Users/gozel/OneDrive/Desktop/event_management_app/event_management_app/lib/pages/participant/home_page.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -245,7 +244,6 @@ class _SignUpState extends State<SignUp> {
         onPressed: () {
           // If all fields are filled
           if (_formKey.currentState.validate()) {
-            // TODO Register the user
             int _age = int.parse(_ageController.text);
             ParticipantService participantService = new ParticipantService();
             Participant newParticipant = new Participant(
@@ -257,7 +255,7 @@ class _SignUpState extends State<SignUp> {
                 age: _age,
                 identityNumber: _identityNumberController.text);
             participantService.saveUser(newParticipant).then((response) {
-              if (response.statusCode < 300) {
+              if (response.statusCode < 400) {
                 Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text(
                   'Successful Sign Up',
@@ -271,12 +269,14 @@ class _SignUpState extends State<SignUp> {
                 )));
               }
             }).catchError((error) {
-              print(error);
+              Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text('Something went wrong!',
+                      style: TextStyle(fontSize: 20))));
             });
           } else {
             // If fields are empty
-            // TODO Show up appropriate error message if not valid user
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error')));
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('Error', style: TextStyle(fontSize: 20))));
           }
         },
       ),

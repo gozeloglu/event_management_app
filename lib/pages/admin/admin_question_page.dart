@@ -32,7 +32,6 @@ class QuestionListPageState extends State<QuestionListPage> {
         child: FutureBuilder<List<dynamic>>(
           future: questionService.getQuestions(widget.meetupID),
           builder: (context, snapshot) {
-            print(snapshot.data == null);
             if (snapshot.hasData) {
               if (snapshot.data.length == 0) {
                 return Center(
@@ -64,7 +63,7 @@ class QuestionListPageState extends State<QuestionListPage> {
                         trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () {
-                            _displayQuestionDialog(
+                            _displayQuestionDeleteDialog(
                                 context, questionIDList[index]);
                           },
                         ),
@@ -109,8 +108,11 @@ class QuestionListPageState extends State<QuestionListPage> {
     );
   }
 
-  _displayQuestionDialog(BuildContext context, int questionID) async {
-    print(questionID);
+  /// This method shows up the dialog for asking delete
+  /// It asks the admin "do you want to delete the question?"
+  /// After deleting the question state is updated
+  /// @param questionID is the id of the question that we want to delete
+  _displayQuestionDeleteDialog(BuildContext context, int questionID) async {
     return showDialog(
         context: context,
         builder: (context) {

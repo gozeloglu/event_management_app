@@ -62,7 +62,6 @@ class HomeState extends State<HomePage> {
               ),
               leading: Icon(Icons.person),
               onTap: () {
-                // TODO Fill in this part
                 if (_scaffoldKey.currentState.isDrawerOpen) {
                   _scaffoldKey.currentState.openEndDrawer();
                   Navigator.push(
@@ -81,7 +80,6 @@ class HomeState extends State<HomePage> {
               ),
               leading: Icon(Icons.event),
               onTap: () {
-                // TODO Fill in this part
 
                 if (_scaffoldKey.currentState.isDrawerOpen) {
                   _scaffoldKey.currentState.openEndDrawer();
@@ -177,14 +175,12 @@ class HomeState extends State<HomePage> {
                                   .convert(meetupDetails[index].codeUnits),
                               maxLines: 1),
                           onTap: () {
-                            // TODO Details page
                             Navigator.push(
                                 context,
                                 new MaterialPageRoute(
                                     builder: (context) =>
                                         new ParticipantMeetupDetail(
-                                          meetupID: snapshot.data[index]
-                                              ["id"],
+                                          meetupID: snapshot.data[index]["id"],
                                           username: widget.username,
                                           isRegisterPage: true,
                                           startDate: meetupDates[index],
@@ -200,8 +196,6 @@ class HomeState extends State<HomePage> {
               }
             } else if (snapshot.data == null) {
               noDataMessage();
-              // TODO Registered user count
-              // TODO MeetupID otomatik oluşturulabilir
             }
             return Container(
               alignment: Alignment.center,

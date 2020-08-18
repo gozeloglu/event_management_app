@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:event_management_app/services/admin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,6 @@ import 'package:event_management_app/models/mail.dart';
 import 'package:event_management_app/models/meetup.dart';
 import 'package:event_management_app/models/question.dart';
 import 'package:event_management_app/pages/qr_code.dart';
-import 'package:event_management_app/services/admin_service.dart';
 import 'package:event_management_app/services/participant_service.dart';
 import 'package:event_management_app/services/question_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,7 +38,6 @@ class ParticipantMeetupDetail extends StatefulWidget {
 class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
   bool _refresh = false;
   ParticipantService participantService = new ParticipantService();
-  AdminService adminService = new AdminService();
   TextEditingController _questionTextController = TextEditingController();
   QuestionService questionService = new QuestionService();
   final _formKey = GlobalKey<FormState>();
@@ -203,13 +201,9 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                     borderRadius:
                                         new BorderRadius.circular(20)),
                                 onPressed: () {
-                                  // TODO Fill in
                                   if (widget.isRegisterPage) {
                                     String _subject =
                                         "See you at " + _meetupName;
-                                    print(_subject);
-                                    print(_meetupName);
-                                    print(widget.firstName);
                                     String _mail = "Dear " +
                                         widget.firstName +
                                         ",\n\nThank you for attending " +
@@ -228,7 +222,6 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                         widget.firstName +
                                         "\nLast Name: " +
                                         widget.lastName;
-                                    print(widget.email);
                                     Mail mail = generateMail(widget.email,
                                         _subject, _mail, _qrCodeMsg);
                                     participantService
@@ -254,7 +247,6 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
                                         )));
                                       }
                                     }).catchError((onError) {
-                                      print(onError.toString());
                                       Scaffold.of(context).showSnackBar(
                                           SnackBar(
                                               content: Text(
@@ -328,6 +320,8 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
     );
   }
 
+  /// This method creates the dialog for asking question
+  /// Also calls the question service for saving on the database
   _displayQuestionDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -422,6 +416,12 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
         });
   }
 
+  /// It controls the meetup is being today or not
+  /// Gets the today's date and compares the meetup date
+  /// @param meetupDate is the date of the meetup that we
+  /// want to control
+  /// @return true if meetup will be happened today
+  ///         false if meetup will not be happened today
   bool _isMeetupToday(List<String> meetupDate) {
     int meetupYear = int.parse(meetupDate[0]);
     int meeupMonth = int.parse(meetupDate[1]);
@@ -446,6 +446,11 @@ class ParticipantMeetupDetailState extends State<ParticipantMeetupDetail> {
     }
   }
 
+  /// This method generates the mail
+  /// @param to is the mail address of the receiver
+  /// @param subject is the mail subject
+  /// @param body is the mail body
+  /// @param qrCodeMsg is the message for QR Code
   Mail generateMail(String to, String subject, String body, String qrCodeMsg) {
     Mail mail =
         Mail(to: to, subject: subject, body: body, qrCodeMsg: qrCodeMsg);

@@ -99,6 +99,8 @@ class ParticipantService {
 
   /// METHOD POST
   /// This method satisfies the registration of the meetup
+  /// Also, it triggers the email with QR Code
+  /// The body of the request stores the mail template
   /// @param username specifies the person who wants to attend the meetup
   /// @param meetupID specifies the meetup that the participant wants to attend
   /// @return HTTP Response object
@@ -191,6 +193,12 @@ class ParticipantService {
     }
   }
 
+  /// METHOD POST
+  /// This method unregisters from the meetup which is given as a parameter, id
+  /// There is no request body
+  /// @param username is the participant's unique username
+  /// @param meetupID is the id of the meetup that we want to unregister
+  /// @return HTTP Response object
   Future<http.Response> unRegisterMeetup(String username, int meetupID) async {
     http.Response response = await http.post(
         "http://10.0.2.2:8080/participants/unregister-participant/" +

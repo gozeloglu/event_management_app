@@ -25,7 +25,7 @@ class AdminReportState extends State<AdminReport> {
         centerTitle: true,
       ),
       body: Container(
-        color: Color.fromRGBO(12,12,12,12),
+        color: Color.fromRGBO(12, 12, 12, 12),
         child: Card(
           color: Color.fromRGBO(12, 12, 12, 12),
           child: Column(

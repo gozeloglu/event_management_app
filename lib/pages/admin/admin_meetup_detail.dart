@@ -61,7 +61,6 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
           IconButton(
             icon: Icon(Icons.list),
             onPressed: () {
-              // TODO List participants
               Navigator.push(
                   context,
                   new MaterialPageRoute(
@@ -249,7 +248,6 @@ class MeetupDetailState extends State<AdminMeetupDetail> {
                                       borderRadius:
                                           new BorderRadius.circular(20)),
                                   onPressed: () {
-                                    /// TODO First look at here
                                     Meetup updatedMeetup = Meetup(
                                         meetupID: snapshot.data.meetupID,
                                         meetupName: snapshot.data.meetupName,

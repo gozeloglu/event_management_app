@@ -154,7 +154,6 @@ class ProfileState extends State<Profile> {
                                     borderRadius:
                                         new BorderRadius.circular(20)),
                                 onPressed: () async {
-                                  // TODO Fill in
                                   final result = await Navigator.push(
                                       context,
                                       new MaterialPageRoute(

@@ -43,7 +43,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
   TextEditingController _endDateController;
   TextEditingController _quotaController;
 
-  // TextEditingController _registeredUserCountController;
 
   @override
   void initState() {
@@ -96,7 +95,6 @@ class MeetupUpdateState extends State<MeetupUpdate> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          //meetupIdWiget(),
                           meetupNameWidget(),
                           detailsWidget(),
                           addressWidget(),
